@@ -3837,7 +3837,7 @@ let Pvalue = parseInt('0');
 let button = document.getElementById('ShowAdsbtn');
 
 document.getElementById('ShowAdsbtn').addEventListener('click', () => {
-  window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
+  window.TelegramAdsController.triggerNativeNotification().then((result) => {
   alert("تبلیغ موفقیت‌آمیز:", result);
   // ✅ اینجا امتیاز اضافه کن به کاربر
 }).catch((err) => {
