@@ -3837,6 +3837,16 @@ let Pvalue = parseInt('0');
 let button = document.getElementById('ShowAdsbtn');
 
 document.getElementById('ShowAdsbtn').addEventListener('click', () => {
+  window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
+  alert("تبلیغ موفقیت‌آمیز:", result);
+  // ✅ اینجا امتیاز اضافه کن به کاربر
+}).catch((err) => {
+  alert("کاربر تبلیغ رو رد کرد یا شکست خورد:", err);
+});
+
+
+
+  
   button.disabled = true;
   document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
   setTimeout(function () {
