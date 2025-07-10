@@ -3833,40 +3833,4 @@ document.getElementById('Noshopbtn').onclick = function () {
 
 // ...........................Earn Sec.................
 
-let Pvalue = parseInt('0');
-let button = document.getElementById('ShowAdsbtn');
 
-document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
-  window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
-     alert("تبلیغ موفقیت‌آمیز:", result);
-    }).catch((result) => {
-         alert("کاربر تبلیغ رو رد کرد یا شکست خورد:", result);
-        });
-
-
-
-  
-  button.disabled = true;
-  document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
-  setTimeout(function () {
-    button.disabled = false;
-    document.getElementById('ShowAdsbtn').className = "PlusBtn";
-    button.style.pointerEvents = "true";
-
-  }, 5000);
-
-
-  Pvalue++;
-  let b = document.getElementById('Claimbtn');
-  document.getElementById('Claimbtn').value = `Claim ( ${Pvalue} )`;
-  if (Pvalue > 0 && b.className == 'ClaimInputgray') {
-    console.log('p > 0');
-    document.getElementById('Claimbtn').className = "ClaimInputgreen";
-
-  }
-
-  document.getElementById('Claimbtn').addEventListener('click',()=>{
-    document.location.reload();
-  });
-
-});
