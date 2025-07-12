@@ -17,9 +17,51 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="./style/main.css">
   <link rel="stylesheet" href="./style/Shop.css">
+  
+  <style>
+    /* تمام صفحه مشکی و لودینگ وسط */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 6px solid #444;
+      border-top: 6px solid #fff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #main-content {
+      display: none;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body>
+  
+  <!-- صفحه لودینگ -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- محتوای اصلی اپ -->
+  <div id="main-content">
   <div class="robotZ" id="robozhiden">
     <p>i am not robot</p>
     <!-- <button id="notrobot">i am not robot</button> -->
@@ -382,11 +424,18 @@
       <input type="button" id="Earninput" value="Earn">
     </div>
   </section>
+  </div>
 
 
   <script src="https://telegram.org/js/telegram-web-app.js?58"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="./js/ProfSec.js"></script>
+   <script>
+    window.onload = () => {
+      document.getElementById("preloader").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    };
+  </script>
 </body>
 
 </html>
