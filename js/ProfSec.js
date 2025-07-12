@@ -3748,7 +3748,7 @@ async function checkAndInsertUser() {
     let button = document.getElementById('ShowAdsbtn');
 
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
-      window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
+      window.TelegramAdsController.triggerNativeNotification().then((result) => {
         // Ok 
         async function secsess() {
           ExValue++
@@ -3872,7 +3872,7 @@ document.getElementById('LogOutbtn').addEventListener('click', () => {
 })
 
 function sendEmail() {
-  const email = 'blackalpha85a@gmail.com';
+  const email = 'thefreepay.io@gmail.com';
   window.location.href = `mailto:${email}`;
 };
 
