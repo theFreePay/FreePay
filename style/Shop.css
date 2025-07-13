@@ -36,7 +36,7 @@
     background-color: #000022;
     width: 100%;
     height: auto;
-    margin-top: 1rem;
+    margin-top: -1rem;
 }
 
 .borderDiv {
@@ -60,7 +60,7 @@
     font-size: 0.8rem;
     color: white;
     text-shadow: 0rem 0rem 1rem pink;
-    padding: 1rem;
+    padding: 0.5rem;
 
 }
 
