@@ -211,6 +211,7 @@ body{
     width: 100%;
     height: 50rem;
     background-color: #000022;
+    gap: 1rem;
 }
 .Profsecnone{
     display: none;
@@ -267,7 +268,7 @@ body{
 }
 .emailp{
     text-shadow: 0rem 0rem 0.5rem rgb(245, 150, 166);
-    padding:0.5rem;
+    padding:1.5rem;
 }
 
 .main2{
@@ -275,7 +276,7 @@ body{
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    margin-top: -1rem;
+    margin-top: 3rem;
     margin-left: 1rem;
     color: white;
     width: 100%;
