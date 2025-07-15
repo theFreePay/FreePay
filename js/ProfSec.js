@@ -3792,6 +3792,17 @@ async function checkAndInsertUser() {
             toast.onmouseleave = Swal.resumeTimer;
           }
         });
+        
+window.showGiga()
+  .then(() => {
+    // Your reward logic here
+    alert('Can Show ad : GigaPub');
+  })
+  .catch(e => {
+    // Handle errors here
+    alert('Cant Show ad : GigaPub');
+    
+  });
         Toast.fire({
           icon: "error",
           title: "Please try again a few minutes later or change your IP"
