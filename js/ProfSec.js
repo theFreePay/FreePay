@@ -3748,6 +3748,36 @@ async function checkAndInsertUser() {
     let button = document.getElementById('ShowAdsbtn');
 
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
+      
+    const adsNotFoundCallback = () => {
+        alert('No ads found to show');
+        // Write your code here in case we couldn't display ad
+    };
+
+    // Callback for REWARDED format
+    const onClickRewardCallback = (adId) => {
+        alert('Clicked ad:', adId);
+    };
+
+    const adController = window.tads.init({
+        widgetId: 565,
+        type: 'FULLSCREEN',
+        debug: false, // Use 'true' for development and 'false' for production
+        onClickReward: onClickRewardCallback,
+        onAdsNotFound: adsNotFoundCallback
+    });
+
+    adController.loadAd()
+        .then(() => adController.showAd())
+        .catch((err) => {
+            console.log(err);
+            adsNotFoundCallback();
+        });
+
+    
+
+      
+      
       window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
         // Ok 
         async function secsess() {
