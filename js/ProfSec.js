@@ -3749,13 +3749,13 @@ async function checkAndInsertUser() {
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
       
     const adsNotFoundCallback = () => {
-        alert('No ads found to show');
+       // alert('No ads found to show');
         // Write your code here in case we couldn't display ad
     };
 
     // Callback for REWARDED format
     const onClickRewardCallback = (adId) => {
-        alert('Clicked ad:', adId);
+       // alert('Clicked ad:', adId);
     };
 
     const adController = window.tads.init({
@@ -3825,11 +3825,11 @@ async function checkAndInsertUser() {
 window.showGiga()
   .then(() => {
     // Your reward logic here
-    alert('Can Show ad : GigaPub');
+   // alert('Can Show ad : GigaPub');
   })
   .catch(e => {
     // Handle errors here
-    alert('Cant Show ad : GigaPub');
+   // alert('Cant Show ad : GigaPub');
     
   });
         Toast.fire({
