@@ -3809,6 +3809,19 @@ async function checkAndInsertUser() {
         });
 
       }).catch((result) => {
+        const AdController = window.Adsgram.init({ blockId: "13028" });
+
+        AdController.show().then((result) => {
+          alert("ok");
+    // user watch ad till the end or close it in interstitial format
+    // your code to reward user for rewarded format
+}).catch((result) => {
+          alert("cant");
+    // user get error during playing ad
+    // do nothing or whatever you want
+})
+
+        
         // CantShow
         const Toast = Swal.mixin({
           toast: true,
@@ -3822,20 +3835,20 @@ async function checkAndInsertUser() {
           }
         });
         
-window.showGiga()
-  .then(() => {
+//window.showGiga()
+//  .then(() => {
     // Your reward logic here
    // alert('Can Show ad : GigaPub');
-  })
-  .catch(e => {
+ // })
+//  .catch(e => {
     // Handle errors here
    // alert('Cant Show ad : GigaPub');
     
-  });
-        Toast.fire({
-          icon: "error",
-          title: "Please try again a few minutes later or change your IP"
-        });
+//  });
+//        Toast.fire({
+ //         icon: "error",
+   //       title: "Please try again a few minutes later or change your IP"
+   //     });
 
       });
 
