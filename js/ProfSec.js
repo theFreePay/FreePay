@@ -3809,17 +3809,6 @@ async function checkAndInsertUser() {
         });
 
       }).catch((result) => {
-        const AdController = window.Adsgram.init({ blockId: "13028" });
-
-        AdController.show().then((result) => {
-          alert("ok");
-    // user watch ad till the end or close it in interstitial format
-    // your code to reward user for rewarded format
-}).catch((result) => {
-          alert("cant");
-    // user get error during playing ad
-    // do nothing or whatever you want
-})
 
         
         // CantShow
