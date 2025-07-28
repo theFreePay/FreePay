@@ -3752,7 +3752,7 @@ async function checkAndInsertUser() {
         adexiumWidget.autoMode();
     });
 
-      <script>
+    
     const adsNotFoundCallback = () => {
         alert('No ads found to show');
         // Write your code here in case we couldn't display ad
@@ -3777,7 +3777,6 @@ async function checkAndInsertUser() {
             alert(err);
             adsNotFoundCallback();
         });
-</script>
     
 
     
