@@ -3754,13 +3754,13 @@ async function checkAndInsertUser() {
 
     
     const adsNotFoundCallback = () => {
-        alert('No ads found to show');
+        //alert('No ads found to show');
         // Write your code here in case we couldn't display ad
     };
 
     // Callback for REWARDED format
     const onClickRewardCallback = (adId) => {
-        alert('Clicked ad:', adId);
+        //alert('Clicked ad:', adId);
     };
 
     const adController = window.tads.init({
@@ -3774,7 +3774,7 @@ async function checkAndInsertUser() {
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
-            alert(err);
+         //   alert(err);
             adsNotFoundCallback();
         });
     
