@@ -3747,6 +3747,10 @@ async function checkAndInsertUser() {
     let button = document.getElementById('ShowAdsbtn');
 
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
+      document.addEventListener('DOMContentLoaded', () => {
+        const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
+        adexiumWidget.autoMode();
+    });
       
     const adsNotFoundCallback = () => {
        // alert('No ads found to show');
