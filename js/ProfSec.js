@@ -3751,20 +3751,21 @@ async function checkAndInsertUser() {
         const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
         adexiumWidget.autoMode();
     });
-      
+
+      <script>
     const adsNotFoundCallback = () => {
-       // alert('No ads found to show');
+        alert('No ads found to show');
         // Write your code here in case we couldn't display ad
     };
 
     // Callback for REWARDED format
     const onClickRewardCallback = (adId) => {
-       // alert('Clicked ad:', adId);
+        alert('Clicked ad:', adId);
     };
 
     const adController = window.tads.init({
-        widgetId: 565,
-        type: 'FULLSCREEN',
+        widgetId: 599,
+        type: 'static',
         debug: false, // Use 'true' for development and 'false' for production
         onClickReward: onClickRewardCallback,
         onAdsNotFound: adsNotFoundCallback
@@ -3773,9 +3774,11 @@ async function checkAndInsertUser() {
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
-            console.log(err);
+            alert(err);
             adsNotFoundCallback();
         });
+</script>
+    
 
     
 
