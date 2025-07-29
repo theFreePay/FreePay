@@ -3747,6 +3747,9 @@ async function checkAndInsertUser() {
     let button = document.getElementById('ShowAdsbtn');
 
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
+      button.disabled = true;
+      document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
+      
       document.addEventListener('DOMContentLoaded', () => {
         const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
         adexiumWidget.autoMode();
@@ -3761,6 +3764,34 @@ async function checkAndInsertUser() {
     // Callback for REWARDED format
     const onClickRewardCallback = (adId) => {
         //alert('Clicked ad:', adId);
+      async function secsess() {
+          ExValue++
+          Pvalue++;
+          let b = document.getElementById('Claimbtn');
+          document.getElementById('Claimbtn').value = `Claim ( ${Pvalue} )`;
+          if (Pvalue > 0 && b.className == 'ClaimInputgray') {
+            document.getElementById('Claimbtn').className = "ClaimInputgreen";
+
+          }
+          const { data, error } = await supabase.from("usersinfo")
+            .update({ Points: ExValue, })
+            .eq('user_id', user.id)
+        } secsess();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1800,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Good Job"
+        });
     };
 
     const adController = window.tads.init({
@@ -3816,6 +3847,12 @@ async function checkAndInsertUser() {
 
       }).catch((result) => {
 
+        setTimeout(function () {
+        button.disabled = false;
+        document.getElementById('ShowAdsbtn').className = "PlusBtn";
+        button.style.pointerEvents = "true";
+
+      }, 5000);
         
         // CantShow
         const Toast = Swal.mixin({
@@ -3850,14 +3887,7 @@ async function checkAndInsertUser() {
 
 
 
-      button.disabled = true;
-      document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
-      setTimeout(function () {
-        button.disabled = false;
-        document.getElementById('ShowAdsbtn').className = "PlusBtn";
-        button.style.pointerEvents = "true";
-
-      }, 5000);
+      
 
 
 
