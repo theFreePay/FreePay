@@ -3792,6 +3792,12 @@ async function checkAndInsertUser() {
           icon: "success",
           title: "Good Job"
         });
+      setTimeout(function () {
+        button.disabled = false;
+        document.getElementById('ShowAdsbtn').className = "PlusBtn";
+        button.style.pointerEvents = "true";
+
+      }, 5000);
     };
 
     const adController = window.tads.init({
@@ -3844,6 +3850,12 @@ async function checkAndInsertUser() {
           icon: "success",
           title: "Good Job"
         });
+        setTimeout(function () {
+        button.disabled = false;
+        document.getElementById('ShowAdsbtn').className = "PlusBtn";
+        button.style.pointerEvents = "true";
+
+      }, 5000);
 
       }).catch((result) => {
 
