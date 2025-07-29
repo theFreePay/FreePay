@@ -3752,6 +3752,7 @@ const supabase = window.supabase.createClient(
       
     //   tads ad 
         document.addEventListener('DOMContentLoaded', () => {
+            alert('Dom loaded');
             const adsNotFoundCallback = () => {
                 TryAgainShowAds()
                 //alert('No ads found to show');
@@ -3815,7 +3816,7 @@ const supabase = window.supabase.createClient(
                   TryAgainShowAds()
               });
         });
-        
+
       document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
         button.disabled = true;
         document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
@@ -3891,20 +3892,10 @@ const supabase = window.supabase.createClient(
             }
           });
           
-  //window.showGiga()
-  //  .then(() => {
-      // Your reward logic here
-     // alert('Can Show ad : GigaPub');
-   // })
-  //  .catch(e => {
-      // Handle errors here
-     // alert('Cant Show ad : GigaPub');
-      
-  //  });
-  //        Toast.fire({
-   //         icon: "error",
-     //       title: "Please try again a few minutes later or change your IP"
-     //     });
+          Toast.fire({
+            icon: "error",
+            title: "Please try again a few minutes later or change your IP"
+          });
   
         });
   
