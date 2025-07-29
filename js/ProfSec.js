@@ -3746,17 +3746,12 @@ async function checkAndInsertUser() {
     let Pvalue = parseInt('0');
     let button = document.getElementById('ShowAdsbtn');
 
+    
     document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
       button.disabled = true;
       document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
-      
-      document.addEventListener('DOMContentLoaded', () => {
-        const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
-        adexiumWidget.autoMode();
-    });
 
-    
-    const adsNotFoundCallback = () => {
+      const adsNotFoundCallback = () => {
         //alert('No ads found to show');
         // Write your code here in case we couldn't display ad
     };
@@ -3792,13 +3787,7 @@ async function checkAndInsertUser() {
           icon: "success",
           title: "Good Job"
         });
-      setTimeout(function () {
-        button.disabled = false;
-        document.getElementById('ShowAdsbtn').className = "PlusBtn";
-        button.style.pointerEvents = "true";
-
-      }, 5000);
-    };
+      
 
     const adController = window.tads.init({
         widgetId: 599,
@@ -3811,9 +3800,23 @@ async function checkAndInsertUser() {
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
+             adController.loadAd()
+              .then(() => adController.showAd())
+               .catch((err) => {
+                //   alert(err);
+                 // adsNotFoundCallback();
+             });
          //   alert(err);
             adsNotFoundCallback();
         });
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
+        adexiumWidget.autoMode();
+    });
+
+    
+    
     
 
     
