@@ -3746,8 +3746,17 @@ async function checkAndInsertUser() {
     let Pvalue = parseInt('0');
     let button = document.getElementById('ShowAdsbtn');
 
+    function adshowrun() {
+        adController.loadAd()
+          .then(() => adController.showAd())
+          .catch((err) => {
+            adsNotFoundCallback();
+          });
+    }
+    
     const adsNotFoundCallback = () => {
         //alert('No ads found to show');
+      adshowrun();
         // Write your code here in case we couldn't display ad
     };
 
@@ -3793,21 +3802,13 @@ async function checkAndInsertUser() {
     });
 
 
-      const adshowrun = () => {
-        adController.loadAd()
-        .then(() => adController.showAd())
-        .catch((err) => {
-          adsNotFoundCallback();
-        });
-        //alert('No ads found to show');
-        // Write your code here in case we couldn't display ad
-    };
+      
+
 
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
           adsNotFoundCallback();
-          adshowrun();
         });
       
     
@@ -3886,21 +3887,6 @@ async function checkAndInsertUser() {
             toast.onmouseleave = Swal.resumeTimer;
           }
         });
-        
-//window.showGiga()
-//  .then(() => {
-    // Your reward logic here
-   // alert('Can Show ad : GigaPub');
- // })
-//  .catch(e => {
-    // Handle errors here
-   // alert('Cant Show ad : GigaPub');
-    
-//  });
-//        Toast.fire({
- //         icon: "error",
-   //       title: "Please try again a few minutes later or change your IP"
-   //     });
 
       });
 
