@@ -3746,12 +3746,7 @@ async function checkAndInsertUser() {
     let Pvalue = parseInt('0');
     let button = document.getElementById('ShowAdsbtn');
 
-    
-    document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
-      button.disabled = true;
-      document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
-
-      const adsNotFoundCallback = () => {
+    const adsNotFoundCallback = () => {
         //alert('No ads found to show');
         // Write your code here in case we couldn't display ad
     };
@@ -3797,18 +3792,28 @@ async function checkAndInsertUser() {
         onAdsNotFound: adsNotFoundCallback
     });
 
+
+      const adshowrun = () => {
+        adController.loadAd()
+        .then(() => adController.showAd())
+        .catch((err) => {
+          adsNotFoundCallback();
+        });
+        //alert('No ads found to show');
+        // Write your code here in case we couldn't display ad
+    };
+
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
-             adController.loadAd()
-              .then(() => adController.showAd())
-               .catch((err) => {
-                //   alert(err);
-                 // adsNotFoundCallback();
-             });
-         //   alert(err);
-            adsNotFoundCallback();
+          adsNotFoundCallback();
+          adshowrun();
         });
+      
+    
+    document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
+      button.disabled = true;
+      document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
       
       document.addEventListener('DOMContentLoaded', () => {
         const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
