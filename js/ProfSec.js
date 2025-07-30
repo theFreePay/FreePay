@@ -3795,7 +3795,7 @@ const supabase = window.supabase.createClient(
           const adController = window.tads.init({
               widgetId: 599,
               type: 'static',
-              debug: false, // Use 'true' for development and 'false' for production
+              debug: true, // Use 'true' for development and 'false' for production
               onClickReward: onClickRewardCallback,
               onAdsNotFound: adsNotFoundCallback
           });
