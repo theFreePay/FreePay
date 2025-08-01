@@ -3833,7 +3833,7 @@ const supabase = window.supabase.createClient(
   
         
         
-        window.richadsController.triggerInterstitialVideo().then((result) => {
+        richadsController.triggerInterstitialVideo().then((result) => {
           // Ok 
           async function secsess() {
             ExValue++
