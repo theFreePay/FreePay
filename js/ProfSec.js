@@ -3755,6 +3755,12 @@ const supabase = window.supabase.createClient(
          //tads
     const adsNotFoundCallback = () => {
         alert('No ads found to show');
+        setTimeout(function () {
+          button.disabled = false;
+          document.getElementById('ShowAdsbtn').className = "PlusBtn";
+          button.style.pointerEvents = "true";
+  
+        }, 5000);
         // Write your code here in case we couldn't display ad
     };
 
@@ -3800,7 +3806,7 @@ const supabase = window.supabase.createClient(
     const adController = window.tads.init({
         widgetId: 599,
         type: 'static',
-        debug: true, // Use 'true' for development and 'false' for production
+        debug: false, // Use 'true' for development and 'false' for production
         onClickReward: onClickRewardCallback,
         onAdsNotFound: adsNotFoundCallback
     });
@@ -3857,21 +3863,9 @@ const supabase = window.supabase.createClient(
             icon: "success",
             title: "Good Job"
           });
-          setTimeout(function () {
-          button.disabled = false;
-          document.getElementById('ShowAdsbtn').className = "PlusBtn";
-          button.style.pointerEvents = "true";
-  
-        }, 5000);
+          
   
         }).catch((result) => {
-  
-          setTimeout(function () {
-          button.disabled = false;
-          document.getElementById('ShowAdsbtn').className = "PlusBtn";
-          button.style.pointerEvents = "true";
-  
-        }, 5000);
           
           // CantShow
           const Toast = Swal.mixin({
