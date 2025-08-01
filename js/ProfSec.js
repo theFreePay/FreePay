@@ -3754,7 +3754,7 @@ const supabase = window.supabase.createClient(
 
          //tads
     const adsNotFoundCallback = () => {
-        alert('No ads found to show');
+        //alert('No ads found to show');
         setTimeout(function () {
           button.disabled = false;
           document.getElementById('ShowAdsbtn').className = "PlusBtn";
@@ -3814,17 +3814,9 @@ const supabase = window.supabase.createClient(
     adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
-            alert(err);
+            //alert(err);
             adsNotFoundCallback();
         });
-
-
-          
-        
-        document.addEventListener('load', () => {
-          const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
-          adexiumWidget.autoMode();
-      });
   
       
       
@@ -4020,3 +4012,4 @@ const supabase = window.supabase.createClient(
   
   
   
+
