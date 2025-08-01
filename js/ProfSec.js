@@ -3831,9 +3831,7 @@ const supabase = window.supabase.createClient(
   
 
   
-        
-        
-        richadsController.triggerInterstitialVideo().then((result) => {
+        window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
           // Ok 
           async function secsess() {
             ExValue++
