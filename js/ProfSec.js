@@ -3745,12 +3745,6 @@ const supabase = window.supabase.createClient(
       let ExValue = existingUser.Points;
       let Pvalue = parseInt('0');
       let button = document.getElementById('ShowAdsbtn');
-
-
-
-      
-      
-    //   tads ad 
         
       
 
@@ -3758,64 +3752,70 @@ const supabase = window.supabase.createClient(
         button.disabled = true;
         document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
 
-         // tads
-          let adRequested = false;
-    let adLoadedSuccessfully = false;
-
+         //tads
     const adsNotFoundCallback = () => {
         alert('No ads found to show');
-        adRequested = false;
-
-        // تلاش دوباره بعد از ۳ ثانیه
-        if (!adLoadedSuccessfully) {
-            setTimeout(() => {
-                alert('try again');
-                requestAd();
-            }, 3000);
-        }
+        // Write your code here in case we couldn't display ad
     };
 
+    // Callback for REWARDED format
     const onClickRewardCallback = (adId) => {
-        console.log('Clicked ad:', adId);
-        alert('ok');
+        
+        async function secsess() {
+            ExValue++
+            Pvalue++;
+            let b = document.getElementById('Claimbtn');
+            document.getElementById('Claimbtn').value = `Claim ( ${Pvalue} )`;
+            if (Pvalue > 0 && b.className == 'ClaimInputgray') {
+              document.getElementById('Claimbtn').className = "ClaimInputgreen";
+  
+            }
+            const { data, error } = await supabase.from("usersinfo")
+              .update({ Points: ExValue, })
+              .eq('user_id', user.id)
+          } secsess();
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1800,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Good Job"
+          });
+          setTimeout(function () {
+          button.disabled = false;
+          document.getElementById('ShowAdsbtn').className = "PlusBtn";
+          button.style.pointerEvents = "true";
+  
+        }, 5000);
     };
 
-    const requestAd = () => {
-        if (adRequested || adLoadedSuccessfully) return;
-
-        adRequested = true;
-
-        const adController = window.tads.init({
-            widgetId: 599, 
-            type: 'static',
-            debug: true,
-            onClickReward: onClickRewardCallback,
-            onAdsNotFound: adsNotFoundCallback
-        });
-
-        adController.loadAd()
-            .then(() => {
-                return adController.showAd();
-            })
-            .then(() => {
-                adLoadedSuccessfully = true;
-                console.log('Ad successfully shown');
-            })
-            .catch((err) => {
-                console.log('Error loading ad:', err);
-                adsNotFoundCallback(); // باز هم اجازه تلاش مجدد
-            });
-    };
-
-    window.addEventListener('load', () => {
-        requestAd();
+    const adController = window.tads.init({
+        widgetId: 599,
+        type: 'static',
+        debug: true, // Use 'true' for development and 'false' for production
+        onClickReward: onClickRewardCallback,
+        onAdsNotFound: adsNotFoundCallback
     });
-    
+
+    adController.loadAd()
+        .then(() => adController.showAd())
+        .catch((err) => {
+            alert(err);
+            adsNotFoundCallback();
+        });
 
 
           
         
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('load', () => {
           const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'push-like'});
           adexiumWidget.autoMode();
       });
