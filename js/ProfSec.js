@@ -3751,6 +3751,7 @@ const supabase = window.supabase.createClient(
       
       
     //   tads ad 
+        
       
 
       document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
@@ -3758,8 +3759,7 @@ const supabase = window.supabase.createClient(
         document.getElementById('ShowAdsbtn').className = "PlusBtnDis";
 
          // tads
-          <script>
-    let adRequested = false;
+          let adRequested = false;
     let adLoadedSuccessfully = false;
 
     const adsNotFoundCallback = () => {
@@ -3810,6 +3810,7 @@ const supabase = window.supabase.createClient(
     window.addEventListener('load', () => {
         requestAd();
     });
+    
 
 
           
