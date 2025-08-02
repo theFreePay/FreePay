@@ -3856,6 +3856,10 @@ const supabase = window.supabase.createClient(
           
   
         }).catch((result) => {
+            //onclicka showd
+            window.initCdTma?.({ id: 6084866 }).then(show => window.show = show).catch(e => alert(e));
+	
+            window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
           
           // CantShow
           const Toast = Swal.mixin({
@@ -4012,4 +4016,5 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
