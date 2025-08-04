@@ -3856,11 +3856,39 @@ const supabase = window.supabase.createClient(
           
   
         }).catch((result) => {
-            //onclicka showd
-            window.initCdTma?.({ id: 6084866 }).then(show => window.show = show).catch(e => alert(e));
-	
-            window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
-          
+            window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
+		    async function secsessBaner() {
+            ExValue++
+            Pvalue++;
+            let b = document.getElementById('Claimbtn');
+            document.getElementById('Claimbtn').value = `Claim ( ${Pvalue} )`;
+            if (Pvalue > 0 && b.className == 'ClaimInputgray') {
+              document.getElementById('Claimbtn').className = "ClaimInputgreen";
+  
+            }
+            const { data, error } = await supabase.from("usersinfo")
+              .update({ Points: ExValue, })
+              .eq('user_id', user.id)
+          } secsessBaner();
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1800,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Good Job"
+          });
+    }).catch((result) => {
+        // no ad was for show
+    });
+            
           // CantShow
           const Toast = Swal.mixin({
             toast: true,
@@ -4016,5 +4044,6 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
