@@ -3886,10 +3886,9 @@ const supabase = window.supabase.createClient(
             title: "Good Job"
           });
     }).catch((result) => {
+		    
         // no ad was for show
-    });
-            
-          // CantShow
+		    // CantShow
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -3906,6 +3905,9 @@ const supabase = window.supabase.createClient(
             icon: "error",
             title: "Please try again a few minutes later or change your IP"
           });
+    });
+            
+          
   
         });
   
@@ -4044,6 +4046,7 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
 
