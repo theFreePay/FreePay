@@ -3886,9 +3886,7 @@ const supabase = window.supabase.createClient(
             title: "Good Job"
           });
     }).catch((result) => {
-		    ads.ad_show({
-  adBlockUuid: "1be1cde6-cfba-43ba-9555-6730f7222a08"
-});
+		    
         // no ad was for show
 		    // CantShow
           const Toast = Swal.mixin({
@@ -3905,7 +3903,7 @@ const supabase = window.supabase.createClient(
           
           Toast.fire({
             icon: "error",
-            title: "Please try again a few minutes later or change your IP"
+            title: "Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲"
           });
     });
             
@@ -4048,6 +4046,7 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
 
