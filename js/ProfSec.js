@@ -3886,7 +3886,7 @@ const supabase = window.supabase.createClient(
             title: "Good Job"
           });
     }).catch((result) => {
-		    
+		    window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
         // no ad was for show
 		    // CantShow
           const Toast = Swal.mixin({
@@ -4046,6 +4046,7 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
 
