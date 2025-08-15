@@ -3893,12 +3893,7 @@ window.initCdTma?.({ id: 'YOUR_SPOT_ID' }).then(show => {
             title: "Good Job"
           });
     }).catch((result) => {
-		    window.showAd?.().catch(e => alert('ads cant show:', e));
-
-				window.addEventListener('adCompleted', () => {
-  alert('ads Clicked by user');
-  
-});
+		    
         // no ad was for show
 		    // CantShow
           const Toast = Swal.mixin({
@@ -4058,6 +4053,7 @@ window.initCdTma?.({ id: 'YOUR_SPOT_ID' }).then(show => {
   
   
   
+
 
 
 
