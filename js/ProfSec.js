@@ -3747,21 +3747,21 @@ const supabase = window.supabase.createClient(
       let button = document.getElementById('ShowAdsbtn');
         
      //   onclicka add
-		function onReward() {
-    alert('Reward Function Ok');
-}
+	//	function onReward() {
+   // alert('Reward Function Ok');
+//}
 
-window.addEventListener('adCompleted', () => {
-    alert('Ad completed — rewarding user');
-    onReward();
-});
+//window.addEventListener('adCompleted', () => {
+//    alert('Ad completed — rewarding user');
+//    onReward();
+//});
 
-window.initCdTma?.({ id: 6086778 }).then(show => {
-    alert('Ad engine ready');
-    document.getElementById('ShowAdsbtn').onclick = () => {
-        show().catch(e => console.error('Ad failed:', e));
-    };
-}).catch(e => console.error('Init failed:', e));
+//window.initCdTma?.({ id: 6086778 }).then(show => {
+//    alert('Ad engine ready');
+ //   document.getElementById('ShowAdsbtn').onclick = () => {
+//        show().catch(e => console.error('Ad failed:', e));
+//    };
+//}).catch(e => console.error('Init failed:', e));
 
         
 
@@ -4064,6 +4064,7 @@ window.initCdTma?.({ id: 6086778 }).then(show => {
   
   
   
+
 
 
 
