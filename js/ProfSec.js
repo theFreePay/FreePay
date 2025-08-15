@@ -3746,7 +3746,14 @@ const supabase = window.supabase.createClient(
       let Pvalue = parseInt('0');
       let button = document.getElementById('ShowAdsbtn');
         
-      
+      // راه‌اندازی موتور تبلیغ
+window.initCdTma?.({ id: 'YOUR_SPOT_ID' }).then(show => {
+  window.showAd = show;
+
+  
+
+
+
 
       document.getElementById('ShowAdsbtn')?.addEventListener('click', () => {
         button.disabled = true;
@@ -3886,11 +3893,12 @@ const supabase = window.supabase.createClient(
             title: "Good Job"
           });
     }).catch((result) => {
-		    //window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
+		    window.showAd?.().catch(e => alert('ads cant show:', e));
 
 				window.addEventListener('adCompleted', () => {
-                  alert('✅ User clicked and completed the ad — rewarding now!');
-                  });
+  alert('ads Clicked by user');
+  
+});
         // no ad was for show
 		    // CantShow
           const Toast = Swal.mixin({
@@ -4050,6 +4058,7 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
 
