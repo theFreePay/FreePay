@@ -528,6 +528,10 @@ document.addEventListener('DOMContentLoaded', function() {
   <script src="./js/ProfSec.js"></script>
 
 
+  <script>
+		// Initialize the ad engine and get the SHOW method to display ads
+		window.initCdTma?.({ id:6086778 }).then(show => window.show = show).catch(e => alert(e))
+	</script>
   <script src="https://inapp.telega.io/sdk/v1/sdk.js"></script>
 <script>
   const ads = window.TelegaIn.AdsController.create_miniapp({
@@ -538,6 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 
 </html>
+
 
 
 
