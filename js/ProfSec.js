@@ -3747,23 +3747,21 @@ const supabase = window.supabase.createClient(
       let button = document.getElementById('ShowAdsbtn');
         
      //   onclicka add
-		// rewarded function
-        function onReward(){
-            alert('User Click Ok')
-        };
-        // Reward only when user clicks and completes the ad
-        window.addEventListener('adCompleted', () => {
-            alert('user clickd22');
-            onReward(); // Your reward function (coins, unlock, etc.)
-        });
-        // Initialize the ad engine
-        window.initCdTma?.({ id:6086778 }).then(show => {
-            window.showAd = show;
-            // Attach the click event to your button
-            document.getElementById('ShowAdsbtn').onclick = () => {
-                window.showAd?.().catch(e => console.error('Ad failed:', e));
-            };
-        }).catch(e => console.error('Init failed:', e));
+		function onReward() {
+    alert('Reward Function Ok');
+}
+
+window.addEventListener('adCompleted', () => {
+    alert('Ad completed — rewarding user');
+    onReward();
+});
+
+window.initCdTma?.({ id: 6086778 }).then(show => {
+    alert('Ad engine ready');
+    document.getElementById('ShowAdsbtn').onclick = () => {
+        show().catch(e => console.error('Ad failed:', e));
+    };
+}).catch(e => console.error('Init failed:', e));
 
         
 
@@ -4066,6 +4064,7 @@ const supabase = window.supabase.createClient(
   
   
   
+
 
 
 
