@@ -14,6 +14,8 @@
     });
     
   </script>
+    <script src="https://js.mbidadm.com/in-stream-ad-admanager/tma.js"></script>
+  
   <!--onclicka -->
   <script src="https://js.onclckvd.com/in-stream-ad-admanager/tma.js"></script>
 
@@ -425,7 +427,7 @@
       <div class="bottomearn">
 
         <div class="bottomearnicon">
-          <button class="PlusBtn" id="ShowAdsbtn">
+          <button class="PlusBtn" id="ShowAdsbtn" onclick="window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" class="PlusI" id="PlusI" height="16" fill="currentColor"
               class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
               <path
@@ -534,11 +536,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const ads = window.TelegaIn.AdsController.create_miniapp({
     token: '63a0e95c-a276-46ac-9660-be69d7677b75' });
 
-  
+  window.initCdTma?.({ id: 2010683 })
+      .then(show => window.show = show)
+      .catch(e => alert(e));
     </script>
+  
 </body>
 
 </html>
+
 
 
 
