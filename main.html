@@ -14,8 +14,7 @@
     });
     
   </script>
-    <script src="https://js.mbidadm.com/in-stream-ad-admanager/tma.js"></script>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -424,7 +423,7 @@
       <div class="bottomearn">
 
         <div class="bottomearnicon">
-          <button class="PlusBtn" id="ShowAdsbtn" onclick="window.click?.().then(() => alert('tma ad played')).catch(e => alert(e))">
+          <button class="PlusBtn" id="ShowAdsbtn" >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" class="PlusI" id="PlusI" height="16" fill="currentColor"
               class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
               <path
@@ -529,18 +528,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
   <script src="https://inapp.telega.io/sdk/v1/sdk.js"></script>
-<script>
-  const ads = window.TelegaIn.AdsController.create_miniapp({
-    token: '63a0e95c-a276-46ac-9660-be69d7677b75' });
 
-  window.initCdTma?.({ id: 2010683 })
-      .then(show => window.show = show)
-      .catch(e => alert(e));
-    </script>
-  
 </body>
 
 </html>
+
 
 
 
