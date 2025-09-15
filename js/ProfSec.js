@@ -8527,14 +8527,11 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
       
-      AdController.show().then((result) => {
-        alert('ad ok');
-    // user watch ad till the end or close it in interstitial format
-    // your code to reward user for rewarded format
-}).catch((result) => {
-    // user get error during playing ad
-    // do nothing or whatever you want
-})
+      window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
+        alert(result);
+    }).catch((result) => {
+        alert(result);
+    });
 
     })
 
@@ -8620,4 +8617,5 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
