@@ -4085,7 +4085,7 @@ async function telebot() {
 
     let info = telusersinfo;
     let points = info.point;
-
+    const AdController = window.Adsgram.init({ blockId: "14939" });
     let X1 = document.getElementById('X1');
     let X2 = document.getElementById('X2');
     let X3 = document.getElementById('X3');
@@ -8526,7 +8526,15 @@ async function telebot() {
     })
 
     AMStart.addEventListener('click', () => {
-      console.log('AmBtn');
+      
+      AdController.show().then((result) => {
+        alert('ad ok');
+    // user watch ad till the end or close it in interstitial format
+    // your code to reward user for rewarded format
+}).catch((result) => {
+    // user get error during playing ad
+    // do nothing or whatever you want
+})
 
     })
 
@@ -8612,3 +8620,4 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
