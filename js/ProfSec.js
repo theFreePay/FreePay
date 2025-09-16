@@ -4424,10 +4424,10 @@ async function telebot() {
           p42.style.pointerEvents = 'none';
           p43.style.pointerEvents = 'none';
           p44.style.pointerEvents = 'none';
-          window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
-    console.log(result);
+          window.TelegramAdsController.triggerInterstitialBanner(false).then((result) => {
+    alert(result);
 }).catch((result) => {
-    console.log(result);
+    alert(result);
 });
           PointUpdating();
         }
@@ -8534,6 +8534,7 @@ async function telebot() {
 
       window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
         }).catch((result) => {
+        alert(result);
         })
 
     })
@@ -8620,6 +8621,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
