@@ -4424,6 +4424,11 @@ async function telebot() {
           p42.style.pointerEvents = 'none';
           p43.style.pointerEvents = 'none';
           p44.style.pointerEvents = 'none';
+          window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
+    console.log(result);
+}).catch((result) => {
+    console.log(result);
+});
           PointUpdating();
         }
       }, 1000);
@@ -8527,15 +8532,8 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
 
-      window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
-            // ad was clicked
+      window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
         }).catch((result) => {
-        window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
-        alert(result);
-    }).catch((result) => {
-        alert(result);
-    });
-            // something went wrong or the advertisement was not found
         })
 
     })
@@ -8622,6 +8620,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
