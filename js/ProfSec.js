@@ -8527,10 +8527,10 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
 
-      window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
+      window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
             // ad was clicked
         }).catch((result) => {
-        window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
+        window.TelegramAdsController.triggerNativeNotification(true).then((result) => {
         alert(result);
     }).catch((result) => {
         alert(result);
@@ -8622,6 +8622,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
