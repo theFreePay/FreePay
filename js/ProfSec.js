@@ -8532,7 +8532,6 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
 
-      window.show?.().then(() => console.log('tma ad played')).catch(e => console.log(e))
       
 
     })
@@ -8619,6 +8618,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
