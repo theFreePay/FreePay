@@ -4085,7 +4085,7 @@ async function telebot() {
 
     let info = telusersinfo;
     let points = info.point;
-    const AdController = window.Adsgram.init({ blockId: "14939" });
+    
     let X1 = document.getElementById('X1');
     let X2 = document.getElementById('X2');
     let X3 = document.getElementById('X3');
@@ -4424,11 +4424,7 @@ async function telebot() {
           p42.style.pointerEvents = 'none';
           p43.style.pointerEvents = 'none';
           p44.style.pointerEvents = 'none';
-          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
-    
-}).catch((result) => {
-    alert(result);
-});
+          
           PointUpdating();
         }
       }, 1000);
@@ -8618,6 +8614,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
