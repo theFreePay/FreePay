@@ -8526,13 +8526,23 @@ async function telebot() {
 
     })
 
-    AMStart.addEventListener('click', () => {
-
-      window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
-     
-    })
-
     
+
+    window.initCdTma?.({ id: '6091341' }).then(show => {
+  window.showAd = show;
+
+  
+  AMStart.onclick = () => {
+    window.showAd?.().catch(e => console.error('Ad failed:', e));
+  };
+
+}).catch(e => console.error('Init failed:', e));
+
+// فقط وقتی کاربر تبلیغ رو کلیک و کامل کرد، پاداش بده
+window.addEventListener('adCompleted', () => {
+  console.log('✅ کاربر تبلیغ رو دید و کامل کرد — الان پاداش بده!');
+  onReward(); // تابع پاداش (مثل اضافه کردن سکه، باز کردن محتوا و غیره)
+});
 
 
     playalert.addEventListener('click', () => {
@@ -8616,6 +8626,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
