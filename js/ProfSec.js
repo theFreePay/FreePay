@@ -8528,7 +8528,20 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
 
-      
+      if (window.showAd) {
+      window.showAd()
+        .then(() => {
+          // ✅ تبلیغ نمایش داده شد و کاربر کلیک/تکمیل کرد
+          alert('عالی! کاربر تبلیغ رو دید. اینجا جایزه بده.');
+          // اینجا منطق پاداش رو بنویس (مثل افزایش موجودی یا باز کردن یک بخش)
+        })
+        .catch(err => {
+          console.error('Ad failed to show:', err);
+          alert('متأسفانه تبلیغ نمایش داده نشد. دوباره تلاش کنید.');
+        });
+    } else {
+      alert('تبلیغ هنوز آماده نیست. لطفاً کمی صبر کنید.');
+      }
 
     })
 
@@ -8614,6 +8627,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
