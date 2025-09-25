@@ -8528,10 +8528,8 @@ async function telebot() {
 
     AMStart.addEventListener('click', () => {
 
-      window.showAd?.().then(() => alert('tma ad played')).catch(e => alert(e))
-     window.addEventListener('adCompleted', () => {
-  alert('✅ ad ok');
-   });
+      window.show?.().then(() => alert('tma ad played')).catch(e => alert(e))
+     
     })
 
     
@@ -8618,6 +8616,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
