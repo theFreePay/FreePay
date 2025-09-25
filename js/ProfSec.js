@@ -8540,7 +8540,7 @@ async function telebot() {
 
 // فقط وقتی کاربر تبلیغ رو کلیک و کامل کرد، پاداش بده
 window.addEventListener('adCompleted', () => {
-  console.log('✅ کاربر تبلیغ رو دید و کامل کرد — الان پاداش بده!');
+  alert('user watch the ad');
   onReward(); // تابع پاداش (مثل اضافه کردن سکه، باز کردن محتوا و غیره)
 });
 
@@ -8626,6 +8626,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
