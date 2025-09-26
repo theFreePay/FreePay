@@ -8537,7 +8537,44 @@ async function telebot() {
   window.showAd = show;
 
   
-  AMStart.onclick = () => {
+  
+    ocument.addEventListener("DOMContentLoaded", function() {
+        const WIDGET_ID = "798";
+
+        // Use 'true' for development and 'false' for production
+        const IS_DEBUG = true;
+        
+        // The HTML element ID that triggers the display of ads on click.
+        const btnIdSelector = "your_clickable_selector";  
+        
+        // Callback for REWARDED format.
+        const onShowRewardCallback = (result) => {
+            alert('Show ads, reward user:', result);
+        };
+
+        // Callback for no ads response
+        const onAdsNotFound = () => {
+            alert('Callback which calls if no ads found to show',);
+        }
+
+        const adController = window.tads.init({
+          widgetId: WIDGET_ID,
+          type: 'fullscreen',
+          debug: IS_DEBUG,
+          onShowReward: onShowRewardCallback,
+          onAdsNotFound: onAdsNotFound,
+        });
+        
+        // Use your button or link HTML selector for getElementById
+        AMStart.addEventListener('click', () => {
+          adController
+            .then(() => adController.showAd())
+            .catch((result) => {
+              alert(result);
+            });
+        });
+    });
+      AMStart.onclick = () => {
     window.showAd?.().catch(e => console.error('Ad failed:', e));
   };
 
@@ -8631,6 +8668,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
