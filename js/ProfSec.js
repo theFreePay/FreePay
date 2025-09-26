@@ -8533,12 +8533,12 @@ async function telebot() {
 
     
 
-    window.initCdTma?.({ id: '6091341' }).then(show => {
-  window.showAd = show;
+    
 
+  window.initCdTma?.({ id: '6091341' }).then(show => {
+  window.showAd = show;
   
-  
-    ocument.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         const WIDGET_ID = "798";
 
         // Use 'true' for development and 'false' for production
@@ -8668,6 +8668,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
