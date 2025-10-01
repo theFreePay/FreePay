@@ -8566,7 +8566,7 @@ async function telebot() {
         
         // Use your button or link HTML selector for getElementById
         AMStart.addEventListener('click', () => {
-          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
+          richadsController.triggerInterstitialVideo().then((result) => {
     alert(result);
 }).catch((result) => {
     alert(result);
@@ -8674,6 +8674,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
