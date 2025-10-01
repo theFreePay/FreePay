@@ -8566,11 +8566,12 @@ async function telebot() {
         
         // Use your button or link HTML selector for getElementById
         AMStart.addEventListener('click', () => {
-          richadsController.triggerInterstitialVideo().then((result) => {
-    alert(result);
-}).catch((result) => {
-    alert(result);
-});
+          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
+        alert(result);
+    }).catch((result) => {
+        alert(result);
+    });
+          alert(" please wait");
           
         //  adController
          //   .then(() => adController.showAd())
@@ -8674,6 +8675,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
