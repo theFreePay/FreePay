@@ -8542,7 +8542,7 @@ async function telebot() {
         const WIDGET_ID = "798";
 
         // Use 'true' for development and 'false' for production
-        const IS_DEBUG = true;
+        const IS_DEBUG = false;
         
         // The HTML element ID that triggers the display of ads on click.
         const btnIdSelector = "your_clickable_selector";  
@@ -8560,7 +8560,6 @@ async function telebot() {
         const adController = window.tads.init({
           widgetId: WIDGET_ID,
           type: 'fullscreen',
-          debug: IS_DEBUG,
           onShowReward: onShowRewardCallback,
           onAdsNotFound: onAdsNotFound,
         });
@@ -8575,7 +8574,12 @@ async function telebot() {
         });
     });
       AMStart.onclick = () => {
-    window.showAd?.().catch(e => console.error('Ad failed:', e));
+        window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
+    alert(result);
+}).catch((result) => {
+    alert(result);
+});
+  //  window.showAd?.().catch(e => console.error('Ad failed:', e));
   };
 
 }).catch(e => console.error('Init failed:', e));
@@ -8668,6 +8672,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
