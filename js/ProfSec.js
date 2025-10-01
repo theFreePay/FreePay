@@ -8566,21 +8566,23 @@ async function telebot() {
         
         // Use your button or link HTML selector for getElementById
         AMStart.addEventListener('click', () => {
-          adController
-            .then(() => adController.showAd())
-            .catch((result) => {
-              alert(result);
-            });
-        });
-    });
-      AMStart.onclick = () => {
-        window.TelegramAdsController.triggerInterstitialBanner(true).then((result) => {
+          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
     alert(result);
 }).catch((result) => {
     alert(result);
 });
+          
+        //  adController
+         //   .then(() => adController.showAd())
+          //  .catch((result) => {
+          //    alert(result);
+         //   });
+        });
+    });
+    //  AMStart.onclick = () => {
+        
   //  window.showAd?.().catch(e => console.error('Ad failed:', e));
-  };
+  //};
 
 }).catch(e => console.error('Init failed:', e));
 
@@ -8672,6 +8674,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
