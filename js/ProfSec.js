@@ -8565,25 +8565,9 @@ async function telebot() {
         });
         
         // Use your button or link HTML selector for getElementById
-        AMStart.addEventListener('click', () => {
-          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
-        alert(result);
-    }).catch((result) => {
-        alert(result);
-    });
-          alert(" please wait");
-          
-        //  adController
-         //   .then(() => adController.showAd())
-          //  .catch((result) => {
-          //    alert(result);
-         //   });
-        });
-    });
-    //  AMStart.onclick = () => {
         
-  //  window.showAd?.().catch(e => console.error('Ad failed:', e));
-  //};
+    });
+    
 
 }).catch(e => console.error('Init failed:', e));
 
@@ -8592,7 +8576,14 @@ window.addEventListener('adCompleted', () => {
   alert('user watch the ad');
   onReward(); // تابع پاداش (مثل اضافه کردن سکه، باز کردن محتوا و غیره)
 });
-
+    
+AMStart.addEventListener('click', () => {
+          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
+    alert(result);
+}).catch((result) => {
+    alert(result);
+});
+        });
 
     playalert.addEventListener('click', () => {
       window.location.reload();
@@ -8675,6 +8666,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
