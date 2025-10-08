@@ -4163,9 +4163,9 @@ async function telebot() {
       X4.className = 'Xinput';
 
       CoinStartBtn.value = 'Start (-10)';
-      AMStart.style.pointerEvents = 'All';
-      AMStart.value = 'Start (show ad)';
-      AMStart.className = 'AMStartBTN';
+      AMStart.style.pointerEvents = 'none';
+      AMStart.value = 'Only for (x1)';
+      AMStart.className = 'AMStartBTNCant';
       Zarib4.textContent = 'x2';
       Zarib3.textContent = 'x2';
       Zarib2.textContent = 'x2';
@@ -4180,7 +4180,7 @@ async function telebot() {
 
       CoinStartBtn.value = 'Start (-20)';
       AMStart.style.pointerEvents = 'none';
-      AMStart.value = 'Only for (x1 & x2)';
+      AMStart.value = 'Only for (x1)';
       AMStart.className = 'AMStartBTNCant';
       Zarib4.textContent = 'x4';
       Zarib3.textContent = 'x4';
@@ -4197,7 +4197,7 @@ async function telebot() {
 
       CoinStartBtn.value = 'Start (-50)';
       AMStart.style.pointerEvents = 'none';
-      AMStart.value = 'Only for (x1 & x2)';
+      AMStart.value = 'Only for (x1)';
       AMStart.className = 'AMStartBTNCant';
       Zarib4.textContent = 'x16';
       Zarib3.textContent = 'x16';
@@ -8533,8 +8533,10 @@ async function telebot() {
 
     
 AMStart.addEventListener('click', () => {
+  AMStart.style.pointerEvents = 'none';
           const adsNotFoundCallback = () => {
         alert('No ads found to show');
+            AMStart.style.pointerEvents = 'all';
         // Write your code here in case we couldn't display ad
     };
 
@@ -8640,6 +8642,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
