@@ -8532,57 +8532,31 @@ async function telebot() {
     })
 
     
-
-    
-
-  window.initCdTma?.({ id: '6091341' }).then(show => {
-  window.showAd = show;
-  
-    document.addEventListener("DOMContentLoaded", function() {
-        const WIDGET_ID = "798";
-
-        // Use 'true' for development and 'false' for production
-        const IS_DEBUG = false;
-        
-        // The HTML element ID that triggers the display of ads on click.
-        const btnIdSelector = "your_clickable_selector";  
-        
-        // Callback for REWARDED format.
-        const onShowRewardCallback = (result) => {
-            alert('Show ads, reward user:', result);
-        };
-
-        // Callback for no ads response
-        const onAdsNotFound = () => {
-            alert('Callback which calls if no ads found to show',);
-        }
-
-        const adController = window.tads.init({
-          widgetId: WIDGET_ID,
-          type: 'fullscreen',
-          onShowReward: onShowRewardCallback,
-          onAdsNotFound: onAdsNotFound,
-        });
-        
-        // Use your button or link HTML selector for getElementById
-        
-    });
-    
-
-}).catch(e => console.error('Init failed:', e));
-
-// فقط وقتی کاربر تبلیغ رو کلیک و کامل کرد، پاداش بده
-window.addEventListener('adCompleted', () => {
-  alert('user watch the ad');
-  onReward(); // تابع پاداش (مثل اضافه کردن سکه، باز کردن محتوا و غیره)
-});
-    
 AMStart.addEventListener('click', () => {
-          window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
-    alert(result);
-}).catch((result) => {
-    alert(result);
-});
+          const adsNotFoundCallback = () => {
+        alert('No ads found to show');
+        // Write your code here in case we couldn't display ad
+    };
+
+    // Callback for REWARDED format
+    const onClickRewardCallback = (adId) => {
+       alert('Clicked ad:', adId);
+    };
+
+    const adController = window.tads.init({
+        widgetId: 599,
+        type: 'static',
+        debug: false, // Use 'true' for development and 'false' for production
+        onClickReward: onClickRewardCallback,
+        onAdsNotFound: adsNotFoundCallback
+    });
+
+    adController.loadAd()
+        .then(() => adController.showAd())
+        .catch((err) => {
+            alert(err);
+            adsNotFoundCallback();
+        });
         });
 
     playalert.addEventListener('click', () => {
@@ -8666,6 +8640,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
