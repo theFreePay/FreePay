@@ -8536,6 +8536,22 @@ AMStart.addEventListener('click', () => {
   AMStart.style.pointerEvents = 'none';
           const adsNotFoundCallback = () => {
         alert('No ads found to show');
+            const Toast = Swal.mixin({
+             toast: true,
+             position: "top-end",
+             showConfirmButton: false,
+             timer: 4000,
+             timerProgressBar: true,
+             didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+             }
+           });
+
+           Toast.fire({
+             icon: "error",
+             title: "Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲"
+           });
             AMStart.style.pointerEvents = 'all';
         // Write your code here in case we couldn't display ad
     };
@@ -8642,6 +8658,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
