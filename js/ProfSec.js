@@ -41,12 +41,12 @@ async function telebot() {
     .eq('id', a)
     .single();
 
-    // console.log(telusersinfo.reffrall);
-    const reffrall = telusersinfo.reffrall;
-    let points1 = telusersinfo.point;
-    let fixedPoint = points1.toFixed(1);
+  // console.log(telusersinfo.reffrall);
+  const reffrall = telusersinfo.reffrall;
+  let points1 = telusersinfo.point;
+  let fixedPoint = points1.toFixed(1);
 
-    let UserFind = telusersinfo;
+  let UserFind = telusersinfo;
   if (UserFind.id) {
     document.getElementById('loadingPage').style.display = 'none';
   };
@@ -4085,7 +4085,7 @@ async function telebot() {
 
     let info = telusersinfo;
     let points = info.point;
-    
+
     let X1 = document.getElementById('X1');
     let X2 = document.getElementById('X2');
     let X3 = document.getElementById('X3');
@@ -4251,6 +4251,9 @@ async function telebot() {
           p41.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
 
           PopLose.style.pointerEvents = 'none';
+          p42.style.pointerEvents = 'none';
+          p43.style.pointerEvents = 'none';
+          p44.style.pointerEvents = 'none';
 
           const Toast = Swal.mixin({
             toast: true,
@@ -4287,6 +4290,9 @@ async function telebot() {
 
         if (p1chose == "💩") {
           p42.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+          p41.style.pointerEvents = 'none';
+          p43.style.pointerEvents = 'none';
+          p44.style.pointerEvents = 'none';
 
           PopLose.style.pointerEvents = 'none';
           const Toast = Swal.mixin({
@@ -4326,6 +4332,9 @@ async function telebot() {
 
         if (p1chose == "💩") {
           p43.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+          p41.style.pointerEvents = 'none';
+          p42.style.pointerEvents = 'none';
+          p44.style.pointerEvents = 'none';
 
           PopLose.style.pointerEvents = 'none';
 
@@ -4364,6 +4373,9 @@ async function telebot() {
 
         if (p1chose == "💩") {
           p44.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+          p41.style.pointerEvents = 'none';
+          p42.style.pointerEvents = 'none';
+          p43.style.pointerEvents = 'none';
 
           PopLose.style.pointerEvents = 'none';
 
@@ -4425,11 +4437,11 @@ async function telebot() {
           p43.style.pointerEvents = 'none';
           p44.style.pointerEvents = 'none';
           window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
-    alert(result);
-}).catch((result) => {
-    alert(result);
-});
-          
+            alert(result);
+          }).catch((result) => {
+            alert(result);
+          });
+
           PointUpdating();
         }
       }, 1000);
@@ -8531,51 +8543,1111 @@ async function telebot() {
 
     })
 
-    
-AMStart.addEventListener('click', () => {
-  AMStart.style.pointerEvents = 'none';
-          const adsNotFoundCallback = () => {
-        alert('No ads found to show');
-            const Toast = Swal.mixin({
-             toast: true,
-             position: "top-end",
-             showConfirmButton: false,
-             timer: 4000,
-             timerProgressBar: true,
-             didOpen: (toast) => {
-               toast.onmouseenter = Swal.stopTimer;
-               toast.onmouseleave = Swal.resumeTimer;
-             }
-           });
 
-           Toast.fire({
-             icon: "error",
-             title: "Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲"
-           });
-            AMStart.style.pointerEvents = 'all';
+    AMStart.addEventListener('click', () => {
+      AMStart.style.pointerEvents = 'none';
+      const adsNotFoundCallback = () => {
+        alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        Toast.fire({
+          icon: "error",
+          title: "Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲"
+        });
+        AMStart.style.pointerEvents = 'all';
         // Write your code here in case we couldn't display ad
-    };
+      };
 
-    // Callback for REWARDED format
-    const onClickRewardCallback = (adId) => {
-       alert('Clicked ad:', adId);
-    };
+      // Callback for REWARDED format
+      const onClickRewardCallback = (adId) => {
+        AMStart.style.pointerEvents = 'all';
+        AMStart.value = 'Click to Play !';
+        AMStart.style.backgroundColor = 'Greenyellow'
 
-    const adController = window.tads.init({
+        function StartTimer() {
+          let counter = 12;
+          const timerElement = document.getElementById('TimerId');
+          const totalWidth = timerElement.offsetWidth;
+
+          const interval = setInterval(() => {
+            counter--;
+            const widthPercent = (counter / 12) * 100;
+            timerElement.style.width = `${widthPercent}%`;
+            timerElement.textContent = counter > 0 ? counter : '0';
+
+            if (counter <= 0) {
+              clearInterval(interval);
+              timerElement.style.width = '0%';
+              console.log('ok');
+              playalert.style.pointerEvents = 'all';
+              PopLose.style.pointerEvents = 'none';
+              playalert.innerText = 'Refresh to Play Again';
+              p11.style.pointerEvents = 'none';
+              p12.style.pointerEvents = 'none';
+              p13.style.pointerEvents = 'none';
+              p14.style.pointerEvents = 'none';
+              p21.style.pointerEvents = 'none';
+              p22.style.pointerEvents = 'none';
+              p23.style.pointerEvents = 'none';
+              p24.style.pointerEvents = 'none';
+              p31.style.pointerEvents = 'none';
+              p32.style.pointerEvents = 'none';
+              p33.style.pointerEvents = 'none';
+              p34.style.pointerEvents = 'none';
+              p41.style.pointerEvents = 'none';
+              p42.style.pointerEvents = 'none';
+              p43.style.pointerEvents = 'none';
+              p44.style.pointerEvents = 'none';
+
+
+              PointUpdating();
+            }
+          }, 1000);
+        };
+
+        AMStart.addEventListener('click', () => {
+          AMStart.style.pointerEvents = 'none';
+
+
+          playalert.style.pointerEvents = 'none';
+          X1.style.pointerEvents = 'none';
+          X2.style.pointerEvents = 'none';
+          X3.style.pointerEvents = 'none';
+          X4.style.pointerEvents = 'none';
+
+          if (X1.className == "ClickedZ") {
+            // .............x1 on X1 .............
+
+            if (AMStart.value == 'Click to Play !') {
+              StartTimer();
+
+
+              AMStart.style.pointerEvents = 'none';
+
+              playalert.style.display = 'flex';
+              CoinStartBtn.style.display = 'none';
+              AMStart.style.display = 'none';
+
+              popdivscon1.className = 'PoopDivCon1Off';
+              xdivs1.className = 'XDivOff';
+              popdivscon2.className = 'PoopDivConOff';
+              xdivs2.className = 'XDivOff';
+              popdivscon3.className = 'PoopDivConOff';
+              xdivs3.className = 'XDivOff';
+              popdivscon4.style.pointerEvents = 'all';
+              xdivs3.style.pointerEvents = 'all';
+
+
+
+
+              p11.addEventListener('click', () => {
+
+
+                // console.log("p11");
+                // after DTB Ok!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                playalert.style.pointerEvents = 'all';
+
+
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, 0.2, 0.1];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p11.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p11.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+
+
+
+
+                  } else {
+                    let points1 = points += p1chose;
+
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p11.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p1chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim (${p1chose})`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDivOff';
+                    // popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDiv';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p1As.style.pointerEvents = 'none';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon4').style.zIndex = '5';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+
+                } LogRandomElementP1();
+
+              });
+              // ......................P12
+              p12.addEventListener('click', () => {
+
+
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, 0.2, 0.1];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p12.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p12.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+                    p12.innerHTML = `<span
+                                    style="color: Black; font-weight:bold;">${p1chose}</span>
+                                  <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                      class="bi bii bi-coin" viewBox="0 0 16 16">
+                                      <path
+                                        d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                      <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                                    </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDivOff';
+                    // popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDiv';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p1As.style.pointerEvents = 'none';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon4').style.zIndex = '5';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p12");
+              });
+              // ...........................p13
+              p13.addEventListener('click', () => {
+
+
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, 0.2, 0.1];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p13.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p13.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p13.innerHTML = `<span
+                                    style="color: Black; font-weight:bold;">${p1chose}</span>
+                                  <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                      class="bi bii bi-coin" viewBox="0 0 16 16">
+                                      <path
+                                        d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                      <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                                    </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDivOff';
+                    // popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDiv';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p1As.style.pointerEvents = 'none';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon4').style.zIndex = '5';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p13");
+              })
+              // ..............................p14
+              p14.addEventListener('click', () => {
+
+
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, 0.2, 0.1];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p14.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p14.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p14.innerHTML = `<span
+                                    style="color: Black; font-weight:bold;">${p1chose}</span>
+                                  <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                                      class="bi bii bi-coin" viewBox="0 0 16 16">
+                                      <path
+                                        d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                      <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                                    </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDivOff';
+                    // popdivscon3.className = 'PoopDivCon';
+                    xdivs2.className = 'XDiv';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p1As.style.pointerEvents = 'none';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon4').style.zIndex = '5';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p14");
+              });
+
+              // ...................p2.........
+              p21.addEventListener('click', () => {
+                const p2Numbs = [0.3, 0.4, 0.5, 0.6, "💩", 0.2, 0.1];
+                function createArrayForP2() {
+                  return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP2() {
+                  const arr2 = createArrayForP2();
+                  let p2chose = (arr2[Math.floor(Math.random() * arr2.length)]);
+                  p21.style.backgroundImage = 'none';
+
+                  if (p2chose == "💩") {
+
+                    p21.innerHTML = `<span style="color: Black; font-weight:bold;">${p2chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p2chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p21.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p2chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs3.className = 'XDiv';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivCon';
+                    popdivscon3.className = 'PoopDivConOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p2As.style.pointerEvents = 'none';
+                    p3As.style.pointerEvents = 'all';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon3').style.zIndex = '6';
+
+
+
+
+
+                    console.log("you win");
+                  }
+                } LogRandomElementP2();
+                console.log("p21");
+
+              })
+              p22.addEventListener('click', () => {
+                const p2Numbs = [0.3, 0.4, 0.5, 0.6, "💩", 0.2, 0.1];
+                function createArrayForP2() {
+                  return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP2() {
+                  const arr2 = createArrayForP2();
+                  let p2chose = (arr2[Math.floor(Math.random() * arr2.length)]);
+                  p22.style.backgroundImage = 'none';
+
+                  if (p2chose == "💩") {
+                    p22.innerHTML = `<span style="color: Black; font-weight:bold;">${p2chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p2chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p22.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p2chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs3.className = 'XDiv';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivCon';
+                    popdivscon3.className = 'PoopDivConOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p2As.style.pointerEvents = 'none';
+                    p3As.style.pointerEvents = 'all';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon3').style.zIndex = '6';
+
+
+
+
+
+                    console.log("you win");
+                  }
+                } LogRandomElementP2();
+                console.log("p22");
+              })
+              p23.addEventListener('click', () => {
+                const p2Numbs = [0.3, 0.4, 0.5, 0.6, "💩", 0.2, 0.1];
+                function createArrayForP2() {
+                  return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP2() {
+                  const arr2 = createArrayForP2();
+                  let p2chose = (arr2[Math.floor(Math.random() * arr2.length)]);
+                  p23.style.backgroundImage = 'none';
+
+                  if (p2chose == "💩") {
+                    p23.innerHTML = `<span style="color: Black; font-weight:bold;">${p2chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p2chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p23.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p2chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs3.className = 'XDiv';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivCon';
+                    popdivscon3.className = 'PoopDivConOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p2As.style.pointerEvents = 'none';
+                    p3As.style.pointerEvents = 'all';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon3').style.zIndex = '6';
+
+
+
+
+
+                    console.log("you win");
+                  }
+                } LogRandomElementP2();
+                console.log("p23");
+              })
+              p24.addEventListener('click', () => {
+                const p2Numbs = [0.3, 0.4, 0.5, 0.6, "💩", 0.2, 0.1];
+                function createArrayForP2() {
+                  return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP2() {
+                  const arr2 = createArrayForP2();
+                  let p2chose = (arr2[Math.floor(Math.random() * arr2.length)]);
+                  p24.style.backgroundImage = 'none';
+
+                  if (p2chose == "💩") {
+                    p24.innerHTML = `<span style="color: Black; font-weight:bold;">${p2chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p1As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points1 = points += p2chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points1 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p24.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p2chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs3.className = 'XDiv';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivCon';
+                    popdivscon3.className = 'PoopDivConOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p2As.style.pointerEvents = 'none';
+                    p3As.style.pointerEvents = 'all';
+                    popdivscon3.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon3').style.zIndex = '6';
+
+
+
+
+
+                    console.log("you win");
+                  }
+                } LogRandomElementP2();
+                console.log("p24");
+              })
+
+
+              // .......................p3..........
+              p31.addEventListener('click', () => {
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, "💩"];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p31.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p31.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p3As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points3 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points3 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p31.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p1chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivConOff';
+                    xdivs1.className = 'XDivOff';
+                    xdivs3.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivConOff';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p3As.style.pointerEvents = 'none';
+                    popdivscon1.className = 'PoopDivCon1';
+                    xdivs1.className = 'XDiv';
+                    popdivscon1.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon2').style.zIndex = '7';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p31");
+              })
+              p32.addEventListener('click', () => {
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, "💩"];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p32.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p32.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p3As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points3 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points3 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p32.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p1chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivConOff';
+                    xdivs1.className = 'XDivOff';
+                    xdivs3.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivConOff';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p3As.style.pointerEvents = 'none';
+                    popdivscon1.className = 'PoopDivCon1';
+                    xdivs1.className = 'XDiv';
+                    popdivscon1.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon2').style.zIndex = '7';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p32");
+              })
+              p33.addEventListener('click', () => {
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, "💩"];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p33.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p33.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p3As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points3 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points3 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p33.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p1chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivConOff';
+                    xdivs1.className = 'XDivOff';
+                    xdivs3.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivConOff';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p3As.style.pointerEvents = 'none';
+                    popdivscon1.className = 'PoopDivCon1';
+                    xdivs1.className = 'XDiv';
+                    popdivscon1.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon2').style.zIndex = '7';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p33");
+              })
+              p34.addEventListener('click', () => {
+                const p1Numbs = [0.3, 0.4, 0.5, 0.6, "💩"];
+                function createArrayForP1() {
+                  return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
+                }
+                function LogRandomElementP1() {
+                  const arr1 = createArrayForP1();
+                  let p1chose = (arr1[Math.floor(Math.random() * arr1.length)]);
+                  p34.style.backgroundImage = 'none';
+
+                  if (p1chose == "💩") {
+                    p34.innerHTML = `<span style="color: Black; font-weight:bold;">${p1chose}</span>`;
+
+                    PopLose.style.pointerEvents = 'none';
+
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "warning",
+                      title: "Ooh you lose"
+                    });
+                    playalert.innerText = 'Ooh you lose';
+                    p3As.style.pointerEvents = 'none';
+
+
+                  } else {
+                    let points3 = points += p1chose;
+                    async function P1RewardedGiven() {
+                      const { data1, error1 } = await supabase.from("telusersinfo")
+                        .update({ point: points3 })
+                        .eq('id', a)
+                    } P1RewardedGiven();
+
+                    p34.innerHTML = `<span
+                        style="color: Black; font-weight:bold;">${p1chose}</span>
+                      <i><svg id="Pointp" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
+                          class="bi bii bi-coin" viewBox="0 0 16 16">
+                          <path
+                            d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                          <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
+                        </svg></i>`;
+                    playalert.innerText = `Claim`;
+                    document.getElementById('bginputs').style.backgroundColor = 'greenyellow';
+                    popdivscon1.className = 'PoopDivCon1Off';
+                    xdivs1.className = 'XDivOff';
+                    popdivscon3.className = 'PoopDivConOff';
+                    xdivs1.className = 'XDivOff';
+                    xdivs3.className = 'XDivOff';
+                    popdivscon2.className = 'PoopDivConOff';
+                    xdivs2.className = 'XDivOff';
+                    popdivscon4.className = 'PoopDivConOff';
+                    xdivs4.className = 'XDivOff';
+                    p3As.style.pointerEvents = 'none';
+                    popdivscon1.className = 'PoopDivCon1';
+                    xdivs1.className = 'XDiv';
+                    popdivscon1.style.pointerEvents = 'all';
+                    document.getElementById('popdivscon2').style.zIndex = '7';
+
+
+
+
+                    console.log("you win");
+
+
+
+
+
+
+
+                  }
+                } LogRandomElementP1();
+                console.log("p34");
+              })
+            }
+          }
+
+        });
+
+      };
+
+      const adController = window.tads.init({
         widgetId: 599,
         type: 'static',
         debug: false, // Use 'true' for development and 'false' for production
         onClickReward: onClickRewardCallback,
         onAdsNotFound: adsNotFoundCallback
-    });
+      });
 
-    adController.loadAd()
+      adController.loadAd()
         .then(() => adController.showAd())
         .catch((err) => {
-            alert(err);
-            adsNotFoundCallback();
+          alert(err);
+          adsNotFoundCallback();
         });
-        });
+    });
 
     playalert.addEventListener('click', () => {
       window.location.reload();
@@ -8658,35 +9730,4 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
