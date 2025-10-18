@@ -4434,9 +4434,9 @@ async function telebot() {
           p43.style.pointerEvents = 'none';
           p44.style.pointerEvents = 'none';
           window.TelegramAdsController.triggerInterstitialBanner().then((result) => {
-            alert(result);
+            // alert(result);
           }).catch((result) => {
-            alert(result);
+            // alert(result);
           });
 
           PointUpdating();
@@ -5520,9 +5520,9 @@ async function telebot() {
             playalert.style.pointerEvents = 'all';
 
 
-            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 1];
+            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -5602,9 +5602,9 @@ async function telebot() {
           // ......................P2
           p12.addEventListener('click', () => {
             points -= 10;
-            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 1];
+            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -5684,9 +5684,9 @@ async function telebot() {
           // ...........................p13
           p13.addEventListener('click', () => {
             points -= 10;
-            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 1];
+            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -5766,9 +5766,9 @@ async function telebot() {
           // ..............................p14
           p14.addEventListener('click', () => {
             points -= 10;
-            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 1];
+            const p1Numbs = [2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(1);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -5848,7 +5848,7 @@ async function telebot() {
 
           // .................................p2.......
           p21.addEventListener('click', () => {
-            const p2Numbs = [6.1, 6.2, 6.2, 6.3, 6.4, 6.5, 3.6, 3.7, 3.8, 3.9];
+            const p2Numbs = [6.01, 6.02, 6.02, 6.03, 6.04, 6.05, 6.06, 6.07, 6.08, 6.09];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -5923,7 +5923,7 @@ async function telebot() {
 
           })
           p22.addEventListener('click', () => {
-            const p2Numbs = [6.1, 6.2, 6.2, 6.3, 6.4, 6.5, 3.6, 3.7, 3.8, 3.9];
+            const p2Numbs = [6.01, 6.02, 6.02, 6.03, 6.04, 6.05, 6.06, 6.07, 6.08, 6.09];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -5997,7 +5997,7 @@ async function telebot() {
             console.log("p22");
           })
           p23.addEventListener('click', () => {
-            const p2Numbs = [6.1, 6.2, 6.2, 6.3, 6.4, 6.5, 3.6, 3.7, 3.8, 3.9];
+            const p2Numbs = [6.01, 6.02, 6.02, 6.03, 6.04, 6.05, 6.06, 6.07, 6.08, 6.09];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -6071,7 +6071,7 @@ async function telebot() {
             console.log("p23");
           })
           p24.addEventListener('click', () => {
-            const p2Numbs = [6.1, 6.2, 6.2, 6.3, 6.4, 6.5, 3.6, 3.7, 3.8, 3.9];
+            const p2Numbs = [6.01, 6.02, 6.02, 6.03, 6.04, 6.05, 6.06, 6.07, 6.08, 6.09];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -6147,7 +6147,7 @@ async function telebot() {
 
           // .......................p3..........
           p31.addEventListener('click', () => {
-            const p1Numbs = [4, "💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
+            const p1Numbs = ["💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -6230,7 +6230,7 @@ async function telebot() {
             console.log("p31");
           })
           p32.addEventListener('click', () => {
-            const p1Numbs = [4, "💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
+            const p1Numbs = ["💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -6313,7 +6313,7 @@ async function telebot() {
             console.log("p32");
           })
           p33.addEventListener('click', () => {
-            const p1Numbs = [4, "💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
+            const p1Numbs = ["💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -6396,7 +6396,7 @@ async function telebot() {
             console.log("p33");
           })
           p34.addEventListener('click', () => {
-            const p1Numbs = [4, "💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
+            const p1Numbs = ["💩", 3.9, 3.8, 3.7, 3.6, 3.5, 3.4, 3.3];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -6549,7 +6549,7 @@ async function telebot() {
 
             const p1Numbs = [4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(4);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -6625,7 +6625,7 @@ async function telebot() {
           p12.addEventListener('click', () => {
             const p1Numbs = [4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(4);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -6706,7 +6706,7 @@ async function telebot() {
           p13.addEventListener('click', () => {
             const p1Numbs = [4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(4);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -6789,7 +6789,7 @@ async function telebot() {
             points -= 20;
             const p1Numbs = [4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 4];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(4);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -7554,9 +7554,9 @@ async function telebot() {
             playalert.style.pointerEvents = 'all';
 
 
-            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9, 21];
+            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9,];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(21);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -7636,9 +7636,9 @@ async function telebot() {
           // ......................P2
           p12.addEventListener('click', () => {
             points -= 50;
-            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9, 21];
+            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(21);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -7718,9 +7718,9 @@ async function telebot() {
           // ...........................p13
           p13.addEventListener('click', () => {
             points -= 50;
-            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9, 21];
+            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(21);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -7800,9 +7800,9 @@ async function telebot() {
           // ..............................p14
           p14.addEventListener('click', () => {
             points -= 50;
-            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9, 21];
+            const p1Numbs = [20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9];
             function createArrayForP1() {
-              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat(21);
+              return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
             function LogRandomElementP1() {
               const arr1 = createArrayForP1();
@@ -7883,7 +7883,7 @@ async function telebot() {
           // .................................p2.......
           p21.addEventListener('click', () => {
 
-            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8, 23.9, 23];
+            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -7958,7 +7958,7 @@ async function telebot() {
 
           })
           p22.addEventListener('click', () => {
-            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8, 23.9, 23];
+            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -8032,7 +8032,7 @@ async function telebot() {
             console.log("p22");
           })
           p23.addEventListener('click', () => {
-            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8, 23.9, 23];
+            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -8106,7 +8106,7 @@ async function telebot() {
             console.log("p23");
           })
           p24.addEventListener('click', () => {
-            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8, 23.9, 23];
+            const p2Numbs = [23.1, 23.2, 23.3, 23.4, 23.5];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
             }
@@ -8183,7 +8183,7 @@ async function telebot() {
 
           // .......................p3..........
           p31.addEventListener('click', () => {
-            const p1Numbs = [17.1, "💩", 17.2, 17.3, 17.4, 17.5, 17.6, 17.7, 17.8];
+            const p1Numbs = [ 9, "💩", 9.01, 9.02,9.03,9.04,9.05,9.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8267,7 +8267,7 @@ async function telebot() {
             console.log("p31");
           })
           p32.addEventListener('click', () => {
-            const p1Numbs = [17.1, "💩", 17.2, 17.3, 17.4, 17.5, 17.6, 17.7, 17.8];
+            const p1Numbs = [9, "💩", 9.01, 9.02,9.03,9.04,9.05,9.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8350,7 +8350,7 @@ async function telebot() {
             console.log("p32");
           })
           p33.addEventListener('click', () => {
-            const p1Numbs = [17.1, "💩", 17.2, 17.3, 17.4, 17.5, 17.6, 17.7, 17.8];
+            const p1Numbs = [9, "💩", 9.01, 9.02,9.03,9.04,9.05,9.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8433,7 +8433,7 @@ async function telebot() {
             console.log("p33");
           })
           p34.addEventListener('click', () => {
-            const p1Numbs = [17.1, "💩", 17.2, 17.3, 17.4, 17.5, 17.6, 17.7, 17.8];
+            const p1Numbs = [9, "💩", 9.01, 9.02,9.03,9.04,9.05,9.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -9733,4 +9733,3 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
-
