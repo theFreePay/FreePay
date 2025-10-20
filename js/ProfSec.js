@@ -18,6 +18,7 @@ const a = user.id;
 
 
 
+
 async function telebot() {
 
   const { data2, error2 } = await supabase
@@ -8545,10 +8546,17 @@ async function telebot() {
     })
 
 
+    let apluss = 0;
     AMStart.addEventListener('click', () => {
       AMStart.style.pointerEvents = 'none';
       AMStart.style.backgroundColor = 'Gray';
+      AMStart.value = '👇 Click the ad 👇';
+      apluss++;
+      
+      
       const adsNotFoundCallback = () => {
+        AMStart.value = 'Start (show ad)';
+
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
         const Toast = Swal.mixin({
@@ -8631,7 +8639,7 @@ async function telebot() {
           if (X1.className == "ClickedZ") {
             // .............x1 on X1 .............
 
-            if (AMStart.value == 'Click to Play !') {
+            if (AMStart.value == '👇 Click the ad 👇') {
               StartTimer();
 
 
@@ -9644,12 +9652,14 @@ async function telebot() {
         onAdsNotFound: adsNotFoundCallback
       });
 
-      adController.loadAd()
-        .then(() => adController.showAd())
-        .catch((err) => {
-          alert(err);
-          adsNotFoundCallback();
-        });
+      if(apluss == 1){
+        adController.loadAd()
+          .then(() => adController.showAd())
+          .catch((err) => {
+            alert(err);
+            adsNotFoundCallback();
+          });
+      }
     });
 
     playalert.addEventListener('click', () => {
