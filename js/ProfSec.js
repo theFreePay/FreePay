@@ -8547,7 +8547,6 @@ async function telebot() {
     })
 
 
-    
     AMStart.addEventListener('click', () => {
       AMStart.style.pointerEvents = 'none';
       AMStart.style.backgroundColor = 'Gray';
@@ -8556,9 +8555,7 @@ async function telebot() {
 
 
       const adsNotFoundCallback = () => {
-        aplusss = 0;
         AMStart.value = 'Start (show ad)';
-        console.log(apluss);
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
         const Toast = Swal.mixin({
