@@ -85,7 +85,7 @@ async function telebot() {
   document.getElementById('RedId').innerText = `${info.id}`;
   document.getElementById('RefCount').innerText = `Referral : ${info.reffrallCount}`
   document.getElementById('RefCopyId').addEventListener('click', () => {
-    window.location.href=`https://t.me/share/url?text=Hey%20my%20friend!%F0%9F%8E%AE%0AJoin%20the%20game%20with%20my%20invite%20link%20and%20get%20extra%20coins%20%F0%9F%AA%99%0AReferral%20Code%3A%0A${info.id}%0AStart%20now!%F0%9F%91%87%0Ahttps%3A%2F%2Ft.me%2FTheFreePayBot%2FFreePayShop`;
+    window.location.href = `https://t.me/share/url?text=Hey%20my%20friend!%F0%9F%8E%AE%0AJoin%20the%20game%20with%20my%20invite%20link%20and%20get%20extra%20coins%20%F0%9F%AA%99%0AReferral%20Code%3A%0A${info.id}%0AStart%20now!%F0%9F%91%87%0Ahttps%3A%2F%2Ft.me%2FTheFreePayBot%2FFreePayShop`;
   });
   const ClaimRefBtn = document.getElementById('ClaimRef');
   const ReffValue = document.getElementById('FriendRef');
@@ -109,7 +109,7 @@ async function telebot() {
 
 
           let FriendPoint = FindFriend.point += 10;
-          let FriendreffrallCount = FindFriend.reffrallCount +=1;
+          let FriendreffrallCount = FindFriend.reffrallCount += 1;
 
           let MyPointReff = points1 += 10;
           console.log(FriendreffrallCount);
@@ -117,7 +117,7 @@ async function telebot() {
             // my Friend reward Referral
 
             const { data1, error1 } = await supabase.from("telusersinfo")
-              .update({ point: FriendPoint , reffrallCount: FriendreffrallCount})
+              .update({ point: FriendPoint, reffrallCount: FriendreffrallCount })
               .eq('id', FriendFind)
 
             // my reward Referral
@@ -156,7 +156,7 @@ async function telebot() {
 
   } ReffCan();
 
-  
+
 
   if (info.name <= '') {
     console.log('aazzzzz');
@@ -6876,7 +6876,7 @@ async function telebot() {
 
           // .................................p2.......
           p21.addEventListener('click', () => {
-            
+
             const p2Numbs = [10.1, 10.2, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9];
             function createArrayForP2() {
               return [0, 1, 2].map(() => p2Numbs[Math.floor(Math.random() * p2Numbs.length)]).concat("💩");
@@ -8188,7 +8188,7 @@ async function telebot() {
 
           // .......................p3..........
           p31.addEventListener('click', () => {
-            const p1Numbs = [ 10, "💩", 10.01, 10.02,10.03,10.04,10.05,10.06];
+            const p1Numbs = [10, "💩", 10.01, 10.02, 10.03, 10.04, 10.05, 10.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8272,7 +8272,7 @@ async function telebot() {
             console.log("p31");
           })
           p32.addEventListener('click', () => {
-            const p1Numbs = [10, "💩", 10.01, 10.02,10.03,10.04,10.05,10.06];
+            const p1Numbs = [10, "💩", 10.01, 10.02, 10.03, 10.04, 10.05, 10.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8355,7 +8355,7 @@ async function telebot() {
             console.log("p32");
           })
           p33.addEventListener('click', () => {
-            const p1Numbs = [10, "💩", 10.01, 10.02,10.03,10.04,10.05,10.06];
+            const p1Numbs = [10, "💩", 10.01, 10.02, 10.03, 10.04, 10.05, 10.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8438,7 +8438,7 @@ async function telebot() {
             console.log("p33");
           })
           p34.addEventListener('click', () => {
-            const p1Numbs = [10, "💩", 10.01, 10.02,10.03,10.04,10.05,10.06];
+            const p1Numbs = [10, "💩", 10.01, 10.02, 10.03, 10.04, 10.05, 10.06];
             function createArrayForP1() {
               return [0, 1, 2].map(() => p1Numbs[Math.floor(Math.random() * p1Numbs.length)]).concat("💩");
             }
@@ -8552,11 +8552,12 @@ async function telebot() {
       AMStart.style.backgroundColor = 'Gray';
       AMStart.value = '👇 Click the ad 👇';
       apluss++;
-      
-      
+
+
       const adsNotFoundCallback = () => {
         AMStart.value = 'Start (show ad)';
 
+        apluss++;
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
         const Toast = Swal.mixin({
@@ -9652,7 +9653,7 @@ async function telebot() {
         onAdsNotFound: adsNotFoundCallback
       });
 
-      if(apluss == 1){
+      if (apluss == 1) {
         adController.loadAd()
           .then(() => adController.showAd())
           .catch((err) => {
@@ -9705,10 +9706,10 @@ function sendEmail() {
   document.getElementById('RefPage').style.display = 'flex';
 };
 
-document.getElementById('ReffCodeInfo').addEventListener('click',()=>{
+document.getElementById('ReffCodeInfo').addEventListener('click', () => {
   document.getElementById('RefPage4').style.display = 'flex';
 });
-document.getElementById('BackFer4').addEventListener('click',()=>{
+document.getElementById('BackFer4').addEventListener('click', () => {
   document.getElementById('RefPage4').style.display = 'none';
 });
 
