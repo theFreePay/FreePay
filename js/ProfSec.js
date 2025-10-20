@@ -19,6 +19,7 @@ const a = user.id;
 
 
 
+
 async function telebot() {
 
   const { data2, error2 } = await supabase
@@ -8546,18 +8547,20 @@ async function telebot() {
     })
 
 
-    let apluss = 0;
+    let aplusss = 0;
     AMStart.addEventListener('click', () => {
       AMStart.style.pointerEvents = 'none';
       AMStart.style.backgroundColor = 'Gray';
+      if(aplusss == 0){
+        aplusss++;
+      }
       AMStart.value = '👇 Click the ad 👇';
-      apluss++;
 
 
       const adsNotFoundCallback = () => {
+        aplusss = 0;
         AMStart.value = 'Start (show ad)';
-
-        apluss--;
+        console.log(apluss);
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
         const Toast = Swal.mixin({
@@ -8582,6 +8585,7 @@ async function telebot() {
 
       // Callback for REWARDED format
       const onClickRewardCallback = (adId) => {
+        aplusss++;
         AMStart.style.pointerEvents = 'all';
         AMStart.value = 'Click to Play !';
         AMStart.style.backgroundColor = 'Greenyellow';
@@ -9645,15 +9649,17 @@ async function telebot() {
 
       };
 
-      const adController = window.tads.init({
-        widgetId: 599,
-        type: 'static',
-        debug: false, // Use 'true' for development and 'false' for production
-        onClickReward: onClickRewardCallback,
-        onAdsNotFound: adsNotFoundCallback
-      });
-
-      if (apluss == 1) {
+      
+      
+      if(aplusss == 1){
+        aplusss++;
+        const adController = window.tads.init({
+          widgetId: 599,
+          type: 'static',
+          debug: false, // Use 'true' for development and 'false' for production
+          onClickReward: onClickRewardCallback,
+          onAdsNotFound: adsNotFoundCallback
+        });
         adController.loadAd()
           .then(() => adController.showAd())
           .catch((err) => {
@@ -9661,6 +9667,7 @@ async function telebot() {
             adsNotFoundCallback();
           });
       }
+      
     });
 
     playalert.addEventListener('click', () => {
@@ -9750,4 +9757,3 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
-
