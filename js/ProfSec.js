@@ -8547,14 +8547,20 @@ async function telebot() {
     })
 
 
+    let adon = true;
     AMStart.addEventListener('click', () => {
       AMStart.style.pointerEvents = 'none';
       AMStart.style.backgroundColor = 'Gray';
-      
+      if (adon == true) {
+        adon = true;
+        console.log(adon);
+
+      }
       AMStart.value = '👇 Click the ad 👇';
 
 
       const adsNotFoundCallback = () => {
+        adon = true;
         AMStart.value = 'Start (show ad)';
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
@@ -8580,7 +8586,7 @@ async function telebot() {
 
       // Callback for REWARDED format
       const onClickRewardCallback = (adId) => {
-        
+        adon = false;
         AMStart.style.pointerEvents = 'all';
         AMStart.value = 'Click to Play !';
         AMStart.style.backgroundColor = 'Greenyellow';
@@ -9646,7 +9652,8 @@ async function telebot() {
 
       
       
-      
+      if (adon == true) {
+
         const adController = window.tads.init({
           widgetId: 599,
           type: 'static',
@@ -9660,7 +9667,7 @@ async function telebot() {
             alert(err);
             adsNotFoundCallback();
           });
-      
+        }
       
     });
 
