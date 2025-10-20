@@ -8547,13 +8547,11 @@ async function telebot() {
     })
 
 
-    let aplusss = 0;
+    
     AMStart.addEventListener('click', () => {
       AMStart.style.pointerEvents = 'none';
       AMStart.style.backgroundColor = 'Gray';
-      if(aplusss == 0){
-        aplusss++;
-      }
+      
       AMStart.value = '👇 Click the ad 👇';
 
 
@@ -8585,7 +8583,7 @@ async function telebot() {
 
       // Callback for REWARDED format
       const onClickRewardCallback = (adId) => {
-        aplusss++;
+        
         AMStart.style.pointerEvents = 'all';
         AMStart.value = 'Click to Play !';
         AMStart.style.backgroundColor = 'Greenyellow';
@@ -9651,8 +9649,7 @@ async function telebot() {
 
       
       
-      if(aplusss == 1){
-        aplusss++;
+      
         const adController = window.tads.init({
           widgetId: 599,
           type: 'static',
@@ -9666,7 +9663,7 @@ async function telebot() {
             alert(err);
             adsNotFoundCallback();
           });
-      }
+      
       
     });
 
