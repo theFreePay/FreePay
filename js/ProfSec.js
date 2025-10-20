@@ -8557,7 +8557,7 @@ async function telebot() {
       const adsNotFoundCallback = () => {
         AMStart.value = 'Start (show ad)';
 
-        apluss++;
+        apluss--;
         AMStart.style.backgroundColor = 'Greenyellow';
         alert('Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲');
         const Toast = Swal.mixin({
@@ -9750,3 +9750,4 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
