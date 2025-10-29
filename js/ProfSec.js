@@ -10449,19 +10449,9 @@ document.getElementById('Noshopbtn').onclick = function () {
 
 
 
-const adsNotFoundCallback = () => {
-
-  // Write your code here in case we couldn't display ad
-};
-
-// Callback for REWARDED format
-const onClickRewardCallback = (adId) => {
-
-  AMStart.addEventListener('click', () => {
 
 
-  });
 
-};
+
 
 
