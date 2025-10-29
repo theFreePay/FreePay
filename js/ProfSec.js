@@ -10464,16 +10464,4 @@ const onClickRewardCallback = (adId) => {
 
 };
 
-const adController = window.tads.init({
-  widgetId: 599,
-  type: 'static',
-  debug: false, // Use 'true' for development and 'false' for production
-  onClickReward: onClickRewardCallback,
-  onAdsNotFound: adsNotFoundCallback
-});
-adController.loadAd()
-  .then(() => adController.showAd())
-  .catch((err) => {
-    alert(err);
-    adsNotFoundCallback();
-  });
+
