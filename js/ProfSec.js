@@ -65,7 +65,7 @@ async function telebot() {
 
 
       document.getElementById('pointvalue').textContent = `${fixedPoint}`;
-      document.getElementById('pointvalue2').textContent = `${fixedPoint}`;
+      
       document.getElementById('pointvalue3').textContent = `${fixedPoint}`;
     } PointUpdating();
   }, 2500)
@@ -10425,6 +10425,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
