@@ -13,6 +13,27 @@ if (!user) {
 
 const a = user.id;
 
+
+// PooP Main Go......
+document.getElementById('PooPGameShow').addEventListener("click", () => {
+  async function PointUpdating2() {
+      let { data: telusersinfo, error1 } = await supabase
+        .from('telusersinfo')
+        .select('*')
+        .eq('id', a)
+        .single();
+
+      let info = telusersinfo;
+      let points = info.point;
+      let fixedPoint = points.toFixed(1);
+
+
+      
+      document.getElementById('pointvalue2').textContent = `${fixedPoint}`;
+    } PointUpdating2();
+  document.getElementById('earnsec322').style.display = 'flex';
+})
+
 async function telebot() {
 
   const { data2, error2 } = await supabase
@@ -10368,10 +10389,7 @@ const emailbox = document.getElementById('emailpp');
 document.getElementById('ComBackHome').addEventListener("click", () => {
   document.getElementById('earnsec322').style.display = 'none';
 })
-// PooP Main Go......
-document.getElementById('PooPGameShow').addEventListener("click", () => {
-  document.getElementById('earnsec322').style.display = 'flex';
-})
+
 // Neon Crash
 document.getElementById('CrashId').addEventListener("click", () => {
   document.getElementById('NoeonPage').style.display = 'flex';
@@ -10425,6 +10443,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
