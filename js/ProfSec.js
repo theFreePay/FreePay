@@ -9633,7 +9633,7 @@ async function telebot() {
         betButton.classList.remove('loading-ad');
         // Call onAdCompleted after successful ad display
         onAdCompleted2();
-      }, 2000);
+      }, 7000);
     }
 
     function startRound() {
@@ -10443,6 +10443,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
