@@ -50,10 +50,10 @@ async function telebot() {
 
 
   if (telusersinfo.HalowGift == false) {
+    document.getElementById('HalowinMedal').className = "HalowMedalOff";
+    document.getElementById('HallowGift').className = "GifClaimed";
     document.getElementById('ShopAlertIcon').style.display = "none";
     document.getElementById('AlertGifHallowin').style.display = "none";
-    document.getElementById('HalowinMedal').className = "HalowMedalOn";
-    document.getElementById('HallowGift').className = "GifClaimed";
   } else if (telusersinfo.HalowGift == true) {
     document.getElementById('ShopAlertIcon').style.display = "none";
     document.getElementById('AlertGifHallowin').style.display = "none";
@@ -10439,6 +10439,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
