@@ -50,33 +50,10 @@ async function telebot() {
 
 
   if (telusersinfo.HalowGift == false) {
-    document.getElementById('HallowGift').addEventListener('click', () => {
-      Swal.fire({
-        title: "You Won!!",
-        text: "halowin medal",
-        imageUrl: "https://nomuylulsjtwjoinrxmr.supabase.co/storage/v1/object/sign/Gifts/HalowMedal.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV81YTYzZmZiNS02NDZkLTRlYzAtOTJmMC02YWFlZTE2MmNkOGQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJHaWZ0cy9IYWxvd01lZGFsLnBuZyIsImlhdCI6MTc2MTkxMjcwNSwiZXhwIjozMzI2NjM3NjcwNX0.Jit8E0uLTDeD4Zl7YO8qgiZY9_Layx9fc9koZMUEiSk",
-        imageWidth: 200,
-        imageHeight: 200,
-        imageAlt: "Custom image"
-      });
-
-      console.log("hihihih");
-      async function HalowGiftOwn() {
-        const { data, error } = await supabase.from("telusersinfo")
-          .update({ HalowGift: true })
-          .eq('id', a)
-      } HalowGiftOwn()
-      setTimeout(() => {
-
-        window.location.reload();
-      }, 2000);
-
-    });
-
-    document.getElementById('HalowinMedal').className = "HalowMedalOff";
-    document.getElementById('HallowGift').className = "HallowGift";
-    document.getElementById('ShopAlertIcon').style.display = "flex";
-    document.getElementById('AlertGifHallowin').style.display = "flex";
+    document.getElementById('ShopAlertIcon').style.display = "none";
+    document.getElementById('AlertGifHallowin').style.display = "none";
+    document.getElementById('HalowinMedal').className = "HalowMedalOn";
+    document.getElementById('HallowGift').className = "GifClaimed";
   } else if (telusersinfo.HalowGift == true) {
     document.getElementById('ShopAlertIcon').style.display = "none";
     document.getElementById('AlertGifHallowin').style.display = "none";
@@ -10462,6 +10439,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
