@@ -11,7 +11,12 @@
 <script type="text/javascript" src="https://cdn.tgads.space/assets/js/adexium-widget.min.js"></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', () => {
-        const adexiumWidget = new AdexiumWidget({wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5', adFormat: 'interstitial'});
+        const adexiumWidget = new AdexiumWidget({
+          wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5',
+          adFormat: 'interstitial',
+          firstAdImpressionIntervalInSeconds: 5,
+          adImpressionIntervalInSeconds: 20,
+        });
         adexiumWidget.autoMode();
     });
 </script> 
@@ -931,6 +936,7 @@
 
 
 </html>
+
 
 
 
