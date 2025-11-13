@@ -10214,7 +10214,7 @@ async function telebot() {
 
     function handleBetStart(isDemo) {
 
-      document.addEventListener('DOMContentLoaded', () => {
+    
     // widget initialization
     const adexiumAds = new AdexiumWidget({
         wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5',
@@ -10233,7 +10233,7 @@ async function telebot() {
     adexiumAds.on('noAdFound', () => {
         // do something if ad is not found for user
     });
-});
+
       
       messageDisplay.style.display = 'all';
       messageDisplay.textContent = '👇 Click the ad to start 👇';
@@ -10464,6 +10464,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
