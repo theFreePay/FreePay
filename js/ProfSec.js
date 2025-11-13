@@ -10214,26 +10214,7 @@ async function telebot() {
 
     function handleBetStart(isDemo) {
 
-      adexiumAds.requestAd('interstitial');
-      adexiumAds.on('adReceived', (ad) => {
-        adexiumAds.displayAd(ad); // displaying ad
-    });
-      adexiumAds.on('noAdFound', () => {
-        // do something if ad is not found for user
-    });
-      const adReceivedListener = (ad) => {
-    adexiumAds.displayAd(ad); // display ad using our styles
-    //taskId = ad.id 
-};
-
-// subscribe
-adexiumAds.on('adReceived', adReceivedListener);
- 
-// unsubscribe
-adexiumAds.off('adReceived', adReceivedListener);
-      adexiumAds.on('adRedirected', () => {
-    alert('clicked and redirected');
-});
+      
       
       messageDisplay.style.display = 'all';
       messageDisplay.textContent = '👇 Click the ad to start 👇';
@@ -10462,6 +10443,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
