@@ -10263,7 +10263,7 @@ async function telebot() {
         const adController = window.tads.init({
           widgetId: 894,
           type: 'static',
-          debug: false, // Use 'true' for development and 'false' for production
+          debug: true, // Use 'true' for development and 'false' for production
           onClickReward: onClickRewardCallback,
           onAdsNotFound: adsNotFoundCallback
         });
@@ -10445,6 +10445,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
