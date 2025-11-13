@@ -10215,24 +10215,7 @@ async function telebot() {
     function handleBetStart(isDemo) {
 
     
-    // widget initialization
-    const adexiumAds = new AdexiumWidget({
-        wid: 'b5c706cf-3c27-4cf4-b83d-203870755dd5',
-        adFormat: 'interstitial',
-        debug: true // remove this on production, use for test only
-    });
     
-    // bind click event on button
-    
-        
-    // subscribe on ad received event
-    adexiumAds.on('adReceived', (ad) => {
-        adexiumAds.displayAd(ad); // displaying ad
-    });
-
-    adexiumAds.on('noAdFound', () => {
-        // do something if ad is not found for user
-    });
 
       
       messageDisplay.style.display = 'all';
@@ -10241,9 +10224,7 @@ async function telebot() {
       if (betButton.textContent == "Start Game (Ad)") {
         betButton.style.pointerEvents = "none";
         const adsNotFoundCallback = () => {
-          // request ad
-        adexiumAds.requestAd('interstitial');
-  
+          
           messageDisplay.textContent = 'Please try again a few minutes later or change your IP to 🇩🇪,🇬🇧 or 🇺🇲';
           betButton.style.pointerEvents = "all";
 
@@ -10464,6 +10445,7 @@ earnbtn.addEventListener('click', () => {
 document.getElementById('Noshopbtn').onclick = function () {
   document.getElementById('FormSec').className = 'formHiden';
 };
+
 
 
 
