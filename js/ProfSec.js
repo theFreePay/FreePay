@@ -10757,5 +10757,6 @@ document.getElementById('Noshopbtn2').onclick = function () {
 
 
 document.getElementById('ProfileShowBtn').addEventListener('click',()=>{
-  window.location.href = 't.me/TheFreePayBot/nfts';
+  window.location.href = 'http://t.me/TheFreePayBot/nfts';
+
 })
