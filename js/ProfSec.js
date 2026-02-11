@@ -7139,7 +7139,7 @@ shopbtn.addEventListener('click', () => {
 // })
 
 document.getElementById('PlayGalaxyGame').addEventListener('click', () => {
-  window.location.href = 'https://t.me/TheFreePayBot/thefreepaygalaxy';
+  window.location.href = 'https://thefreepay.github.io/FreePayGalexy/index.html';
 })
 document.getElementById('InvateFriend').addEventListener('click', () => {
 
@@ -7180,4 +7180,5 @@ document.getElementById('NFTsinput').addEventListener('click',()=>{
   window.location.href = "https://t.me/TheFreePayBot/nfts";
 
 })
+
 
