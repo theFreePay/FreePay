@@ -5,7 +5,7 @@ const _supabase = window.supabase.createClient(
 const tg = window.Telegram.WebApp;
 const user = tg.initDataUnsafe?.user;
 
-RefFounder
+//RefFounder
 
 const referrerId = tg.initDataUnsafe?.start_param;
 
@@ -7181,4 +7181,5 @@ document.getElementById('ComBackHome').addEventListener('click', () => {
 })
 document.getElementById('NFTsinput').addEventListener('click',()=>{
   window.location.href = "https://t.me/TheFreePay/nfts";
+
 })
