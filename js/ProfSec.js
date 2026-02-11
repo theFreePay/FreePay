@@ -58,7 +58,7 @@ async function telebot() {
 
 
   // RefFinder
-  const referrerId = '106727862';
+  //const referrerId = '106727862';
   let { data: ReffIdAcountFounder, error2 } = await _supabase
     .from('telusersinfo')
     .select('*')
@@ -7183,3 +7183,4 @@ document.getElementById('NFTsinput').addEventListener('click',()=>{
   window.location.href = "https://t.me/TheFreePay/nfts";
 
 })
+
