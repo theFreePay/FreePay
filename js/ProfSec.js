@@ -7497,7 +7497,7 @@ document.getElementById('PlayGalaxyGame').addEventListener('click', () => {
 })
 document.getElementById('InvateFriend').addEventListener('click', () => {
 
-  window.location.href = `https://t.me/share/url?text=🎲%20Play%20games%20and%20become%20one%20of%20the%20lucky%20winners%20of%20Telegram%20gifts%20%26%20amazing%20prizes!%20Enter%20now%20via%20the%20link%20below%20and%20win%20big!%20🚀🌃%0A%0A👉%20https://t.me/TheFreePayBot/thefreepaygalaxy?start=ref_${a}`;
+  window.location.href = `https://t.me/share/url?text=🎲%20Play%20games%20and%20become%20one%20of%20the%20lucky%20winners%20of%20Telegram%20gifts%20%26%20amazing%20prizes!%20Enter%20now%20via%20the%20link%20below%20and%20win%20big!%20🚀🌃%0A%0A👉%20https://t.me/TheFreePayBot/FreePayShop?startapp=${a}`;
 })
 // ...............shop sec............... !!
 
@@ -7540,3 +7540,4 @@ document.getElementById('NFTsinput').addEventListener('click', () => {
   document.getElementById("LoadingGame").style.display = 'flex';
 
 })
+
