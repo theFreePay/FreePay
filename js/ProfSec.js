@@ -39,17 +39,17 @@ const a = user.id;
 async function telebot() {
 
   const { data2, error3 } = await _supabase
-    .from('telusersinfo')
-    .upsert({
-      id: user.id,
-      name: user.first_name,
-      username: user.username,
-      premium: user.is_premium,
+  .from('telusersinfo')
+  .upsert({
+  id: user.id,
+  name: user.first_name,
+  username: user.username,
+  premium: user.is_premium,
 
-    },
-      { onConflict: ['id'] }
-    )
-    .select()
+  },
+  { onConflict: ['id'] }
+  )
+  .select()
 
 
   // reffrall Cheker
@@ -88,7 +88,42 @@ async function telebot() {
   const task = document.querySelector(".taskGram");
   task.addEventListener("reward", (event) => {
     // event.detail contains your block id
-    alert(`Reward in block ${event.detail}`);
+    // alert(`Reward in block ${event.detail}`);
+
+    async function AdsGramReward() {
+      let { data: telusersinfo, error3 } = await _supabase
+        .from('telusersinfo')
+        .select('*')
+        .eq('id', a)
+        .single();
+
+      let NewAdsWatch = telusersinfo.AdsWatch;
+      NewAdsWatch +=1;
+      const { data1, error1 } = await _supabase
+        .from('telusersinfo')
+        .update({ AdsWatch: NewAdsWatch })
+        .eq('id', a)
+        .select()
+      let NewPoint = telusersinfo.point;
+      NewPoint += 90;
+
+      const { data3, error } = await _supabase
+        .from('telusersinfo')
+        .update({ point: NewPoint })
+        .eq('id', a)
+        .select()
+      console.log(data3);
+
+    } AdsGramReward().then(() => {
+      Swal.fire({
+        title: "Earned 90 coin.",
+        icon: "success",
+        draggable: true
+      });
+      
+
+
+    })
   });
 
   task.addEventListener("onError", (event) => {
@@ -129,7 +164,7 @@ async function telebot() {
           .eq('id', a)
           .select()
         let NewPoint = telusersinfo.point;
-        NewPoint += 100;
+        NewPoint += 250;
 
         const { data, error } = await _supabase
           .from('telusersinfo')
@@ -140,6 +175,11 @@ async function telebot() {
 
       } TaskRef1().then(() => {
         console.log('Update Ok ');
+        Swal.fire({
+          title: "Earned 250 coin",
+          icon: "success",
+          draggable: true
+        });
         task1FriendShare.classList = 'TaskBtn';
         task1FriendShare.innerText = 'Claimed';
 
@@ -202,6 +242,11 @@ async function telebot() {
 
       } TaskRef1().then(() => {
         console.log('Update Ok ');
+        Swal.fire({
+          title: "You got a new NFT.",
+          icon: "success",
+          draggable: true
+        });
         task5FriendShare.classList = 'TaskBtn';
         task5FriendShare.innerText = 'Claimed';
 
@@ -240,7 +285,7 @@ async function telebot() {
           .eq('id', a)
           .select()
         let NewPoint = telusersinfo.point;
-        NewPoint += 60;
+        NewPoint += 160;
 
         const { data, error } = await _supabase
           .from('telusersinfo')
@@ -251,6 +296,11 @@ async function telebot() {
 
       } Task1KS().then(() => {
         console.log('Update Ok ');
+        Swal.fire({
+          title: "Earned 160 coin",
+          icon: "success",
+          draggable: true
+        });
         K1ScoreBtn.classList = 'TaskBtn';
         K1ScoreBtn.innerText = 'Claimed';
 
@@ -317,6 +367,11 @@ async function telebot() {
 
       } Task3KScore().then(() => {
         console.log('Update Ok ');
+        Swal.fire({
+          title: "You got a new NFT.",
+          icon: "success",
+          draggable: true
+        });
         K3ScoreBtn.classList = 'TaskBtn';
         K3ScoreBtn.innerText = 'Claimed';
 
