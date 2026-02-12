@@ -7433,5 +7433,7 @@ document.getElementById('ComBackHome').addEventListener('click', () => {
 
 })
 document.getElementById('NFTsinput').addEventListener('click', () => {
-  window.location.href = "https://t.me/TheFreePay/nfts";
+  window.location.href = "https://thefreepay.github.io/FreePayNfts/";
+  document.getElementById("LoadingGame").style.display = 'flex';
+
 })
