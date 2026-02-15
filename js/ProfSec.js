@@ -7318,7 +7318,7 @@ async function telebot() {
 
 
 
-  const targetDate = new Date('2026-02-15').getTime();
+  const targetDate = new Date('2026-02-25').getTime();
   setInterval(() => {
     const now = Date.now();
     const left = targetDate - now;
@@ -7540,4 +7540,5 @@ document.getElementById('NFTsinput').addEventListener('click', () => {
   document.getElementById("LoadingGame").style.display = 'flex';
 
 })
+
 
