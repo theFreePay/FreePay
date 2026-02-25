@@ -7810,9 +7810,9 @@ async function telebot() {
 
     // console.log(top99[i].name);
     let userboerd = document.createElement('div');
-    if (i <= 3) {
+    if (i <= 20) {
       userboerd.className = 'UserPutDivLeaderWinners';
-    } else if (i > 3) {
+    } else if (i > 20) {
       userboerd.className = 'UserPutDivLeader';
     }
     userboerd.innerHTML = `<div class="UserDivLeader"><div class="LeaderboedprofileDiv">
@@ -7987,6 +7987,7 @@ document.getElementById('NFTsinput').addEventListener('click', () => {
   document.getElementById("LoadingGame").style.display = 'flex';
 
 })
+
 
 
 
