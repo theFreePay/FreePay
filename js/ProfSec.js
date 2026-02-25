@@ -428,7 +428,18 @@ async function telebot() {
 
       // referrerId;
       document.getElementById('ClaimFriendGift').onclick = (() => {
+        
 
+        const AdController = window.Adsgram.init({ blockId: "int-23717"});
+
+        AdController.show().then((result) => {
+          
+    // user watch ad till the end or close it in interstitial format
+    // your code to reward user for rewarded format
+}).catch((result) => {
+    // user get error during playing ad
+    // do nothing or whatever you want
+})
         document.getElementById('ClaimFriendGift').style.pointerEvents = 'none';
 
         // Ref Recived Coin(Gift) Wen Click Claim
@@ -7976,6 +7987,7 @@ document.getElementById('NFTsinput').addEventListener('click', () => {
   document.getElementById("LoadingGame").style.display = 'flex';
 
 })
+
 
 
 
