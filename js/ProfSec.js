@@ -7765,7 +7765,7 @@ async function telebot() {
 
 
 
-  const targetDate = new Date('2026-08-20').getTime();
+  const targetDate = new Date('2026-07-17').getTime();
   setInterval(() => {
     const now = Date.now();
     const left = targetDate - now;
