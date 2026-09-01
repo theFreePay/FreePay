@@ -1,0 +1,416 @@
+/* =====================================================
+   FreePay Addons — wheel, tickets, tasks revamp, shop revamp
+   Matches existing theme: #EE00ff (magenta) / #000022 (navy)
+   ===================================================== */
+
+/* ---------- Header: ticket badge ---------- */
+.ticketRightDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.6rem;
+  padding-left: 0.6rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.ticketRightDiv svg {
+  color: #EE00ff;
+  filter: drop-shadow(0 0 0.2rem #EE00ff);
+}
+
+#ticketvalue {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ---------- Daily ad-watch counter box (Shop + Tasks) ---------- */
+.fp-daily-counter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 90%;
+  margin: 0.8rem auto;
+  padding: 0.6rem 0.8rem;
+  background: linear-gradient(to right, #ee00ff26, #0022fc1f);
+  border: 1px solid #EE00ff55;
+  border-radius: 0.8rem;
+  color: #fff;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.fp-daily-counter b {
+  color: #EE00ff;
+  text-shadow: 0 0 0.3rem #EE00ff;
+}
+
+/* ---------- Tasks: block-style task reward icon reuse ---------- */
+.fp-ticket-reward {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.15rem;
+  color: greenyellow;
+  font-weight: 800;
+}
+
+/* ---------- Video ad task card ---------- */
+.fp-video-task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  width: 90%;
+  margin: 0.6rem auto;
+  padding: 0.6rem;
+  background: #ffffff08;
+  border: 1px solid #EE00ff33;
+  border-radius: 0.8rem;
+}
+
+.fp-video-task .fp-task-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.5rem;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.fp-video-task .fp-task-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.fp-video-task .fp-task-title {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.fp-task-btn {
+  min-width: 4.2rem;
+  padding: 0.4rem 0.7rem;
+  border: none;
+  border-radius: 0.6rem;
+  background: linear-gradient(to right, #EE00ff, #7a00ff);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.fp-task-btn:disabled {
+  background: #444;
+  color: #aaa;
+}
+
+.fp-task-hint {
+  color: #ff9d9d;
+  font-size: 0.72rem;
+  text-align: center;
+  max-width: 4.6rem;
+}
+
+/* ---------- Link tasks ---------- */
+.fp-link-task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+  width: 90%;
+  margin: 0.6rem auto;
+  padding: 0.6rem;
+  background: #ffffff08;
+  border: 1px solid #EE00ff33;
+  border-radius: 0.8rem;
+}
+
+.fp-link-task .fp-task-icon {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #EE00ff55, #0022fc55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.fp-cooldown {
+  color: #bbb;
+  font-size: 0.7rem;
+}
+
+/* ---------- Lucky Wheel (Home) ---------- */
+.fp-wheel-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.fp-wheel-title {
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 0.02rem;
+}
+
+.fp-wheel-wrap {
+  position: relative;
+  width: 13rem;
+  height: 13rem;
+}
+
+.fp-wheel-pointer {
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 0.6rem solid transparent;
+  border-right: 0.6rem solid transparent;
+  border-top: 1rem solid #EE00ff;
+  filter: drop-shadow(0 0 0.3rem #EE00ff);
+  z-index: 5;
+}
+
+.fp-wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  border: 0.25rem solid #EE00ff;
+  box-shadow: 0 0 1.2rem #ee00ff88, inset 0 0 1rem #0022fc55;
+  background: conic-gradient(
+    #2b0140 0deg 60deg,
+    #1a0033 60deg 120deg,
+    #2b0140 120deg 180deg,
+    #1a0033 180deg 240deg,
+    #2b0140 240deg 300deg,
+    #1a0033 300deg 360deg
+  );
+  transition: transform 4.5s cubic-bezier(0.17, 0.89, 0.32, 1.1);
+}
+
+.fp-wheel-slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5.6rem;
+  text-align: center;
+  transform-origin: left center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-shadow: 0 0 0.3rem #000;
+}
+
+.fp-wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #EE00ff;
+  box-shadow: 0 0 0.6rem #EE00ff;
+  z-index: 4;
+}
+
+.fp-spin-btn {
+  margin-top: 0.4rem;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 1rem;
+  background: linear-gradient(to right, #EE00ff, #7a00ff);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 0 0.6rem #EE00ff88;
+}
+
+.fp-spin-btn:disabled {
+  background: #444;
+  color: #999;
+  box-shadow: none;
+}
+
+.fp-ticket-need {
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+/* ---------- Shop top toggle (NFTs Market / Leaderboard) ---------- */
+.fp-shop-toptabs {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  width: 90%;
+  margin: 0.6rem auto;
+}
+
+.fp-shop-toptabs button {
+  flex: 1;
+  padding: 0.9rem 0.4rem;
+  border: none;
+  border-radius: 0.9rem;
+  background: linear-gradient(160deg, #1a0033, #000022);
+  border: 1px solid #EE00ff55;
+  color: #d9a6ff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.fp-shop-toptabs button.fp-active {
+  color: #fff;
+  border-color: #EE00ff;
+  box-shadow: 0 0 0.6rem #ee00ff66;
+}
+
+/* ---------- Shop pack grid ---------- */
+.fp-pack-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  width: 90%;
+  margin: 0.6rem auto 6rem;
+}
+
+.fp-pack-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.7rem;
+  background: linear-gradient(160deg, #1a0033, #000022);
+  border: 1px solid #EE00ff40;
+  border-radius: 0.9rem;
+}
+
+.fp-pack-card img {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  object-fit: contain;
+  padding: 0.3rem;
+}
+
+.fp-pack-name {
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.fp-pack-price-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.fp-pack-price-old {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 0.75rem;
+}
+
+.fp-pack-price-new {
+  color: greenyellow;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.fp-pack-buy {
+  margin-top: 0.2rem;
+  width: 100%;
+  padding: 0.45rem 0;
+  border: none;
+  border-radius: 0.6rem;
+  background: linear-gradient(to right, #EE00ff, #7a00ff);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.fp-pack-card.fp-soon {
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+/* ---------- Claim Telegram-ID modal ---------- */
+.fp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 10, 0.75);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+}
+
+.fp-modal-backdrop.fp-open {
+  display: flex;
+}
+
+.fp-modal {
+  width: 82%;
+  max-width: 22rem;
+  background: linear-gradient(160deg, #1a0033, #000022);
+  border: 1px solid #EE00ff66;
+  border-radius: 1rem;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.fp-modal h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.fp-modal input {
+  padding: 0.6rem;
+  border-radius: 0.6rem;
+  border: 1px solid #EE00ff55;
+  background: #00001a;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.fp-modal-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+}
+
+.fp-modal-actions button {
+  flex: 1;
+  padding: 0.55rem;
+  border: none;
+  border-radius: 0.6rem;
+  font-weight: 700;
+}
+
+.fp-modal-cancel {
+  background: #333;
+  color: #ccc;
+}
+
+.fp-modal-confirm {
+  background: linear-gradient(to right, #EE00ff, #7a00ff);
+  color: #fff;
+}
