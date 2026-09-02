@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FreePay</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -43,10 +45,18 @@
   }
   .chip span{ font-variant-numeric:tabular-nums; }
 
+  /* ads-watched banner */
+  .ads-banner{
+    margin:0 16px 8px; padding:9px 12px; background:var(--card); border:1px solid var(--border);
+    border-radius:12px; display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--textMuted);
+  }
+  .ads-banner b{ color:var(--text); font-variant-numeric:tabular-nums; }
+
   /* body / screens */
   main{ flex:1; overflow-y:auto; padding:6px 16px 16px; }
   .screen-title{ font-size:15px; font-weight:700; }
   .screen-sub{ font-size:12px; color:var(--textMuted); margin-top:2px; }
+  .section-label{ font-size:11.5px; color:var(--textDim); margin:16px 0 8px; }
 
   /* bottom nav */
   nav{
@@ -117,6 +127,32 @@
 
   /* task screen */
   .task-list{ display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+
+  /* AdsGram ad-task cards */
+  .ad-task{
+    --adsgram-task-font-size: 13.5px;
+    --adsgram-task-icon-size: 42px;
+    --adsgram-task-icon-title-gap: 12px;
+    --adsgram-task-button-width: 76px;
+    --adsgram-task-icon-border-radius: 10px;
+    display:block;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-inline-start:3px solid var(--blue);
+    border-radius:14px;
+    padding:12px;
+    font-family:'Manrope', sans-serif;
+    color:var(--text);
+  }
+  .ad-task__reward{ display:block; font-size:11.5px; color:var(--textMuted); margin-top:2px; }
+  .ad-task__btn{
+    background:var(--blue); color:#06222E; border-radius:10px; padding:8px 0;
+    font-size:12px; font-weight:700; text-align:center; cursor:pointer;
+  }
+  .ad-task__btn--claim{ background:var(--gold); color:#241A05; }
+  .ad-task__btn--done{ background:transparent; border:1px solid var(--border); color:var(--textDim); }
+
+  /* daily link tasks */
   .task-card{
     display:flex; align-items:center; gap:12px; background:var(--card);
     border:1px solid var(--border); border-radius:14px; padding:12px;
@@ -141,7 +177,6 @@
     width:42px; height:42px; border-radius:12px; display:flex; align-items:center;
     justify-content:center; flex-shrink:0; background:rgba(52,179,241,0.12);
   }
-  .shop-icon.star-bg{ background:rgba(255,210,76,0.12); }
   .shop-info{ flex:1; }
   .shop-info .t{ font-size:14px; font-weight:700; }
   .shop-info .d{ font-size:11.5px; color:var(--textMuted); margin-top:2px; }
@@ -151,6 +186,7 @@
     justify-content:center; gap:6px;
   }
   .shop-btn.disabled{ background:var(--card2)!important; color:var(--textDim)!important; }
+  .shop-btn:disabled{ cursor:default; }
 </style>
 </head>
 <body>
@@ -164,6 +200,8 @@
       <div class="chip" id="chipTon"></div>
     </div>
   </header>
+
+  <div id="adsBanner"></div>
 
   <main id="main"></main>
 
@@ -186,13 +224,60 @@
 </div>
 
 <script>
-/* ---------- palette (mirrors CSS vars) ---------- */
+/* ---------- Telegram WebApp bootstrap ---------- */
+const TG = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+if(TG){ try{ TG.ready(); TG.expand(); }catch(e){} }
+
+/* ---------- per-account storage (keyed by numeric Telegram user id) ---------- */
+function getUserId(){
+  try{
+    const u = TG && TG.initDataUnsafe && TG.initDataUnsafe.user;
+    if(u && u.id) return String(u.id);
+  }catch(e){}
+  return "guest";
+}
+const USER_ID = getUserId();
+const STORAGE_KEY = "freepay:" + USER_ID + ":state";
+
+function todayStr(){
+  const d = new Date();
+  return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+}
+
+function loadState(){
+  const base = {
+    coins:0, tickets:5, ton:0, rotation:0, spinCount:0,
+    dailyDate: todayStr(), adsWatchedToday:0, tasksDoneToday:{}
+  };
+  let saved = null;
+  try{ saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); }catch(e){}
+  if(!saved) return base;
+  const merged = Object.assign({}, base, saved);
+  if(merged.dailyDate !== todayStr()){
+    merged.dailyDate = todayStr();
+    merged.adsWatchedToday = 0;
+    merged.tasksDoneToday = {};
+  }
+  return merged;
+}
+
+function persistState(){
+  const toSave = {
+    coins: state.coins, tickets: state.tickets, ton: state.ton,
+    rotation: state.rotation, spinCount: state.spinCount,
+    dailyDate: state.dailyDate, adsWatchedToday: state.adsWatchedToday,
+    tasksDoneToday: state.tasksDoneToday
+  };
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave)); }catch(e){}
+}
+
+/* ---------- palette ---------- */
 const C = {
   gold:'#F5B942', goldDark:'#B9822A', pink:'#FF5C8A', gray:'#3A4066',
-  grayLight:'#9AA1C9', blue:'#34B3F1', star:'#FFD24C', card:'#1B2044', bg:'#11152B'
+  grayLight:'#9AA1C9', blue:'#34B3F1', card:'#1B2044', bg:'#11152B'
 };
 
-/* ---------- icon builders (return SVG markup strings) ---------- */
+/* ---------- icon builders ---------- */
 function coinIcon(size=26, fill=C.gold, ring=C.goldDark){
   return `<svg width="${size}" height="${size}" viewBox="0 0 40 40">
     <circle cx="20" cy="20" r="17.5" fill="${fill}" stroke="${ring}" stroke-width="2.5"/>
@@ -222,9 +307,10 @@ function tonIcon(size=22){
     <path d="M12 2 L22 8.2 L12 13.2 Z" fill="#7FD4FA"/>
   </svg>`;
 }
-function starIcon(size=16){
+function adIcon(size=15){
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24">
-    <path d="M12 1.5 L14.7 9 L23 9 L16.3 14 L18.8 22 L12 17.2 L5.2 22 L7.7 14 L1 9 L9.3 9 Z" fill="${C.star}"/>
+    <rect x="2" y="4" width="20" height="16" rx="3" fill="none" stroke="${C.blue}" stroke-width="2"/>
+    <path d="M10 9l6 3-6 3V9Z" fill="${C.blue}"/>
   </svg>`;
 }
 function navIcon(kind, active){
@@ -251,26 +337,24 @@ function segIcon(type){
 /* ---------- wheel config ---------- */
 const SEGMENTS = [{type:'coin'},{type:'ticket'},{type:'blank'},{type:'coin'},{type:'ticket'},{type:'blank'}];
 
+/* ---------- AdsGram block ads (unlimited, capped by the ad network itself) ---------- */
+const AD_TASKS = [
+  { blockId: 'task-45486', reward: 1 },
+  { blockId: 'task-20434', reward: 1 },
+];
+
+/* ---------- once-a-day link tasks ---------- */
+const EXTRA_TASKS = [
+  { id:3, title:"Play AminAz", desc:"Open the mini game and give it a try", url:"https://who-tma.github.io/AminAz/", reward:1 },
+  { id:4, title:"Visit Lucky Room", desc:"Check out today's bonus room", url:"https://t.me/coin_earn_2026bot/luckyroom?startapp=6413998670", reward:1 },
+  { id:5, title:"Gram Piar Bot", desc:"Open the partner bot for a bonus", url:"https://t.me/gram_piarbot?start=6413998670", reward:1, minTickets:8 },
+];
+
+/* not persisted — tracks which link tasks were opened this session, before claiming */
+let openedTasks = {};
+
 /* ---------- state ---------- */
-let state = {
-  tab: 'home',
-  coins: 0,
-  tickets: 5,
-  ton: 0,
-  rotation: 0,
-  spinning: false,
-  spinCount: 0,
-  tasks: [
-    {id:1, title:'Join the FreePay Telegram channel', desc:'Join our official channel so you never miss an update', reward:1, done:false},
-    {id:2, title:'Follow our Instagram page', desc:'Give our page a follow', reward:1, done:false},
-    {id:3, title:'Invite a friend', desc:'Send your invite link to a friend', reward:1, done:false},
-    {id:4, title:'Watch a short video', desc:'Watch a 15-second clip', reward:1, done:false},
-    {id:5, title:'Take today\'s poll', desc:'Tell us what you think of the app', reward:1, done:false},
-    {id:6, title:'Share the app', desc:'Share the app link with a group', reward:1, done:false},
-    {id:7, title:'Turn on notifications', desc:'So you never miss a reward', reward:1, done:false},
-    {id:8, title:'Visit our partner site', desc:'Check out today\'s partner site', reward:1, done:false},
-  ]
-};
+let state = Object.assign({ tab:'home', spinning:false }, loadState());
 
 let toastTimer = null;
 
@@ -279,6 +363,15 @@ function renderChips(){
   document.getElementById('chipCoins').innerHTML = `${coinIcon(16)}<span>${state.coins}</span>`;
   document.getElementById('chipTickets').innerHTML = `${ticketIcon(18, C.pink, '#20264C')}<span>${state.tickets}</span>`;
   document.getElementById('chipTon').innerHTML = `${tonIcon(14)}<span>${state.ton}</span>`;
+  persistState();
+}
+
+function renderAdsBanner(){
+  document.getElementById('adsBanner').innerHTML = `
+    <div class="ads-banner">
+      ${adIcon(15)}
+      <span>Block ads watched today: <b>${state.adsWatchedToday}</b></span>
+    </div>`;
 }
 
 function renderNav(){
@@ -329,6 +422,7 @@ function renderMain(){
   else main.innerHTML = shopHTML();
 
   if(state.tab === 'home') initWheel();
+  if(state.tab === 'task') attachAdTaskListeners();
 }
 
 function homeHTML(){
@@ -363,24 +457,50 @@ function homeHTML(){
   `;
 }
 
-function taskHTML(){
-  let cards = '';
-  state.tasks.forEach(t=>{
-    cards += `
-      <div class="task-card${t.done ? ' done' : ''}">
-        <div class="task-info">
-          <div class="t">${t.title}</div>
-          <div class="d">${t.desc}</div>
-        </div>
-        <button class="task-btn${t.done ? ' done' : ''}" onclick="doTask(${t.id})" ${t.done ? 'disabled' : ''}>
-          ${t.done ? 'Done' : `+${t.reward} ${ticketIcon(16, '#3A0E1E', C.pink)}`}
-        </button>
-      </div>`;
-  });
+function adTaskCard(t){
   return `
-    <div class="screen-title">Daily Tasks</div>
-    <div class="screen-sub">Complete a task to earn a ticket</div>
-    <div class="task-list">${cards}</div>
+    <adsgram-task
+      data-block-id='${t.blockId}'
+      data-debug='false'
+      data-debug-console='false'
+      data-reward='${t.reward}'
+      class="ad-task"
+    >
+      <span slot="reward" class="ad-task__reward">+${t.reward} ticket</span>
+      <div slot="button" class="ad-task__btn">Watch</div>
+      <div slot="claim" class="ad-task__btn ad-task__btn--claim">Claim</div>
+      <div slot="done" class="ad-task__btn ad-task__btn--done">Done</div>
+    </adsgram-task>`;
+}
+
+function extraTaskCard(t){
+  const doneToday = !!state.tasksDoneToday[t.id];
+  const opened = !!openedTasks[t.id];
+  let label = 'Open';
+  let action = `openExtraTask(${t.id})`;
+  if(doneToday){ label = 'Done'; action = ''; }
+  else if(opened){ label = `Claim +${t.reward} ${ticketIcon(16, '#3A0E1E', C.pink)}`; action = `claimExtraTask(${t.id})`; }
+  return `
+    <div class="task-card${doneToday ? ' done' : ''}">
+      <div class="task-info">
+        <div class="t">${t.title}</div>
+        <div class="d">${t.desc}</div>
+      </div>
+      <button class="task-btn${doneToday ? ' done' : ''}" ${doneToday ? 'disabled' : ''} onclick="${action}">${label}</button>
+    </div>`;
+}
+
+function taskHTML(){
+  let adCards = AD_TASKS.map(adTaskCard).join('');
+  let dailyCards = EXTRA_TASKS
+    .filter(t => !t.minTickets || state.tickets > 7)
+    .map(extraTaskCard).join('');
+  return `
+    <div class="screen-title">Sponsored Tasks</div>
+    <div class="screen-sub">Watch a sponsored task to earn a ticket</div>
+    <div class="task-list">${adCards}</div>
+    <div class="section-label">Daily tasks — once a day each</div>
+    <div class="task-list">${dailyCards}</div>
   `;
 }
 
@@ -399,7 +519,7 @@ function shopHTML(){
             <div class="d">Every 500 coins = 1 TON Coin</div>
           </div>
         </div>
-        <button class="shop-btn${canWithdraw ? '' : ' disabled'}" style="background:${canWithdraw ? C.blue : ''};color:${canWithdraw ? '#06222E' : ''}" onclick="withdrawOnce()">Withdraw 1 TON Coin</button>
+        <button class="shop-btn${canWithdraw ? '' : ' disabled'}" ${canWithdraw ? '' : 'disabled'} style="background:${canWithdraw ? C.blue : ''};color:${canWithdraw ? '#06222E' : ''}" onclick="withdrawOnce()">Withdraw 1 TON Coin</button>
       </div>
 
       <div class="shop-card">
@@ -410,18 +530,7 @@ function shopHTML(){
             <div class="d">Get 10 TON Coin at once for 4,300 coins</div>
           </div>
         </div>
-        <button class="shop-btn${canBuyTen ? '' : ' disabled'}" style="background:${canBuyTen ? C.blue : ''};color:${canBuyTen ? '#06222E' : ''}" onclick="buyTenPack()">Buy for ${coinIcon(15)} 4,300</button>
-      </div>
-
-      <div class="shop-card">
-        <div class="shop-top">
-          <div class="shop-icon star-bg">${tonIcon(22)}</div>
-          <div class="shop-info">
-            <div class="t">1 TON Coin with Stars</div>
-            <div class="d">Pay with Telegram Stars</div>
-          </div>
-        </div>
-        <button class="shop-btn" style="background:${C.star};color:#3A2C00" onclick="buyWithStars()">Buy for ${starIcon(15)} 100 Stars</button>
+        <button class="shop-btn${canBuyTen ? '' : ' disabled'}" ${canBuyTen ? '' : 'disabled'} style="background:${canBuyTen ? C.blue : ''};color:${canBuyTen ? '#06222E' : ''}" onclick="buyTenPack()">Buy for ${coinIcon(15)} 4,300</button>
       </div>
     </div>
   `;
@@ -440,8 +549,9 @@ function handleSpin(){
     return;
   }
   state.tickets -= 5;
-  renderChips();
   state.spinCount += 1;
+  persistState();
+  renderChips();
   const n = state.spinCount;
 
   let idx, type, amount;
@@ -483,11 +593,49 @@ function handleSpin(){
   }, 4300);
 }
 
-/* ---------- task behavior ---------- */
-function doTask(id){
-  const t = state.tasks.find(t=>t.id===id);
-  if(!t || t.done) return;
-  t.done = true;
+/* ---------- AdsGram ad-task behavior ---------- */
+function attachAdTaskListeners(){
+  document.querySelectorAll('.ad-task').forEach(el=>{
+    if(el.dataset.bound) return;
+    el.dataset.bound = '1';
+    const reward = parseInt(el.dataset.reward || '1', 10);
+
+    el.addEventListener('reward', ()=>{
+      state.tickets += reward;
+      state.adsWatchedToday += 1;
+      renderChips();
+      renderAdsBanner();
+      showToast(`+${reward} ticket earned 🎫`);
+    });
+    el.addEventListener('onBannerNotFound', ()=>{
+      showToast('No ad available right now, try again later');
+    });
+    el.addEventListener('onError', ()=>{
+      showToast('Could not load the ad, try again later');
+    });
+    el.addEventListener('onTooLongSession', ()=>{
+      showToast('Session expired, please reopen the app');
+    });
+  });
+}
+
+/* ---------- daily link task behavior ---------- */
+function openExtraTask(id){
+  const t = EXTRA_TASKS.find(x => x.id === id);
+  if(!t || state.tasksDoneToday[t.id]) return;
+  if(t.url.indexOf('https://t.me/') === 0){
+    if(TG && TG.openTelegramLink) TG.openTelegramLink(t.url); else window.open(t.url, '_blank');
+  } else {
+    if(TG && TG.openLink) TG.openLink(t.url); else window.open(t.url, '_blank');
+  }
+  openedTasks[t.id] = true;
+  if(state.tab === 'task') renderMain();
+}
+
+function claimExtraTask(id){
+  const t = EXTRA_TASKS.find(x => x.id === id);
+  if(!t || state.tasksDoneToday[t.id]) return;
+  state.tasksDoneToday[t.id] = true;
   state.tickets += t.reward;
   renderChips();
   showToast(`+${t.reward} ticket earned 🎫`);
@@ -511,14 +659,10 @@ function buyTenPack(){
   showToast('You got 10 TON Coin 💠');
   if(state.tab === 'shop') renderMain();
 }
-function buyWithStars(){
-  state.ton += 1;
-  renderChips();
-  showToast('Paid with Stars — 1 TON Coin added 💠');
-}
 
 /* ---------- init ---------- */
 renderChips();
+renderAdsBanner();
 renderNav();
 renderMain();
 </script>
