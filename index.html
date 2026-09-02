@@ -6,6 +6,7 @@
 <title>FreePay</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
@@ -299,6 +300,71 @@ function getUserId(){
 }
 const USER_ID = getUserId();
 const STORAGE_KEY = "freepay:" + USER_ID + ":state";
+
+/* ---------- Supabase backend (same project/table used by the rest of FreePay) ----------
+   `point` on `telusersinfo` is the shared coin balance, kept in sync with state.coins.
+   `AdsWatch` is the shared lifetime ad counter. Everything else in this screen
+   (tickets, TON, wheel position, daily counters, gift-claimed flag) has no column
+   in the backend yet, so it's kept in localStorage only, per the per-account key above. */
+const _supabase = window.supabase.createClient(
+  'https://nomuylulsjtwjoinrxmr.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vbXV5bHVsc2p0d2pvaW5yeG1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU2NzgwOTgsImV4cCI6MjA2MTI1NDA5OH0.9Vgp9y1EQkbH2GooJgUmXjW4NEA-WY8keL4P5S1tiIc'
+);
+
+/* Creates/refreshes the row for this Telegram user, then pulls the real coin
+   balance from the backend so it overrides whatever was cached locally. */
+async function syncUserFromBackend(){
+  if(USER_ID === 'guest') return;
+  const u = TG && TG.initDataUnsafe && TG.initDataUnsafe.user;
+  try{
+    await _supabase.from('telusersinfo').upsert({
+      id: USER_ID,
+      name: u ? u.first_name : null,
+      username: u ? u.username : null,
+      premium: u ? u.is_premium : null
+    }, { onConflict: ['id'] });
+
+    const { data: row, error } = await _supabase
+      .from('telusersinfo')
+      .select('point')
+      .eq('id', USER_ID)
+      .single();
+    if(error) throw error;
+
+    if(row && typeof row.point === 'number'){
+      state.coins = row.point;
+    } else {
+      /* brand-new row with no point value yet: seed it with whatever we have locally */
+      await _supabase.from('telusersinfo').update({ point: state.coins }).eq('id', USER_ID);
+    }
+    renderChips();
+    if(state.tab === 'home' || state.tab === 'shop') renderMain();
+  }catch(e){
+    console.error('FreePay: could not reach backend, using local coin balance', e);
+  }
+}
+
+/* Call right after state.coins changes locally, so the backend stays the source of truth. */
+async function pushCoinsToBackend(){
+  if(USER_ID === 'guest') return;
+  try{
+    await _supabase.from('telusersinfo').update({ point: state.coins }).eq('id', USER_ID);
+  }catch(e){
+    console.error('FreePay: could not save coins to backend', e);
+  }
+}
+
+/* Fire-and-forget bump of the shared lifetime ad counter (does not block ticket reward UX). */
+async function bumpAdsWatchedBackend(){
+  if(USER_ID === 'guest') return;
+  try{
+    const { data: row } = await _supabase.from('telusersinfo').select('AdsWatch').eq('id', USER_ID).single();
+    const next = (row && typeof row.AdsWatch === 'number' ? row.AdsWatch : 0) + 1;
+    await _supabase.from('telusersinfo').update({ AdsWatch: next }).eq('id', USER_ID);
+  }catch(e){
+    console.error('FreePay: could not update AdsWatch on backend', e);
+  }
+}
 
 function todayStr(){
   const d = new Date();
@@ -628,6 +694,7 @@ function openGift(){
     state.coins += reward;
     state.giftClaimed = true;
     persistState();
+    pushCoinsToBackend();
     renderChips();
     playClaimSound();
 
@@ -853,7 +920,7 @@ function performSpin(){
 
   setTimeout(()=>{
     state.spinning = false;
-    if(type === 'coin') state.coins += amount;
+    if(type === 'coin'){ state.coins += amount; pushCoinsToBackend(); }
     if(type === 'ticket') state.tickets += amount;
     renderChips();
     if(type !== 'blank') playClaimSound();
@@ -876,6 +943,7 @@ function attachAdTaskListeners(){
       renderAdsBanner();
       playClaimSound();
       showToast(`+${reward} ticket earned 🎫`);
+      bumpAdsWatchedBackend();
     });
     el.addEventListener('onBannerNotFound', ()=>{
       showToast('No ad available right now, try again later');
@@ -920,6 +988,7 @@ function withdrawOnce(){
   playClickSound();
   state.coins -= 500;
   state.ton += 1;
+  pushCoinsToBackend();
   renderChips();
   playClaimSound();
   showToast('1 TON Coin added to your wallet 💠');
@@ -930,6 +999,7 @@ function buyTenPack(){
   playClickSound();
   state.coins -= 4300;
   state.ton += 10;
+  pushCoinsToBackend();
   renderChips();
   playClaimSound();
   showToast('You got 10 TON Coin 💠');
@@ -943,6 +1013,7 @@ renderNav();
 renderMain();
 initAdPreload();
 if(!state.giftClaimed) showGiftOverlay();
+syncUserFromBackend(); /* refreshes state.coins from Supabase once it responds; local value renders first so there's no blank flash */
 </script>
 </body>
 </html>
