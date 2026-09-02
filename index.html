@@ -64,11 +64,16 @@
     padding:8px 6px calc(env(safe-area-inset-bottom,0px) + 8px);
   }
   .nav-btn{
-    flex:1; background:none; border:none; display:flex; flex-direction:column;
+    position:relative; flex:1; background:none; border:none; display:flex; flex-direction:column;
     align-items:center; gap:3px; padding:6px 0; cursor:pointer;
   }
   .nav-btn span{ font-size:11px; color:var(--textDim); font-weight:500; }
   .nav-btn.active span{ color:var(--gold); font-weight:700; }
+  .nav-dot{
+    position:absolute; top:2px; right:calc(50% - 20px); width:8px; height:8px;
+    border-radius:50%; background:var(--star); box-shadow:0 0 0 2px var(--bgSoft);
+    animation:popIn .2s ease-out;
+  }
 
   /* toast */
   #toast{
@@ -91,6 +96,34 @@
   #modalSub{ font-size:13px; color:var(--textMuted); margin-bottom:18px; }
   #modalBtn{
     width:100%; padding:11px; border-radius:12px; border:none;
+    background:var(--gold); color:#241A05; font-weight:700; font-size:14px; cursor:pointer;
+  }
+
+  /* welcome gift overlay */
+  #giftOverlay{
+    position:absolute; inset:0; background:rgba(9,11,25,0.88);
+    display:none; align-items:center; justify-content:center; z-index:50;
+  }
+  #giftCard{
+    background:var(--card); border:1px solid var(--border); border-radius:22px;
+    padding:30px 24px; width:270px; text-align:center; animation:popIn .3s ease-out;
+    position:relative; overflow:visible;
+  }
+  #giftTitle{ font-size:17px; font-weight:800; margin-bottom:4px; }
+  #giftSub{ font-size:13px; color:var(--textMuted); margin-bottom:6px; }
+  #giftStage{ position:relative; width:140px; height:140px; margin:14px auto 6px; }
+  #giftParticles{ position:absolute; inset:-40px; pointer-events:none; }
+  #giftBox{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; animation:giftBounce 1.6s ease-in-out infinite;
+  }
+  #giftBox.opened{ animation:none; transform:scale(1.12); transition:transform .25s ease-out; }
+  #giftBox.opened svg #giftLid{ transform:translateY(-14px) rotate(-8deg); }
+  #giftBox svg #giftLid{ transition:transform .3s ease-out; transform-origin:20% 100%; }
+  @keyframes giftBounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+  #giftResult{ font-size:15px; font-weight:700; color:var(--gold); min-height:20px; margin-top:8px; }
+  #giftContinueBtn{
+    display:none; width:100%; margin-top:16px; padding:11px; border-radius:12px; border:none;
     background:var(--gold); color:#241A05; font-weight:700; font-size:14px; cursor:pointer;
   }
 
@@ -120,6 +153,12 @@
     background:radial-gradient(circle at 35% 30%, #FFE3A0, #F5B942 55%, #C98A2A 100%);
     border:3px solid var(--bgSoft); color:#2A1C05; font-weight:800; font-size:12px;
     cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.35);
+    display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.2;
+  }
+  #hub.hub-ad{
+    font-size:9.5px; font-weight:800;
+    background:radial-gradient(circle at 35% 30%, #BEEBFF, var(--blue) 55%, #1C7CA8 100%);
+    color:#06222E;
   }
   #spinHint{ margin-top:22px; font-size:13px; color:var(--textMuted); }
   .legend{ display:flex; gap:14px; margin-top:18px; }
@@ -221,6 +260,28 @@
       <button id="modalBtn" class="tap" onclick="closeModal()">Got it</button>
     </div>
   </div>
+
+  <div id="giftOverlay">
+    <div id="giftCard">
+      <div id="giftTitle">Welcome to FreePay!</div>
+      <div id="giftSub">Tap the gift to open your welcome bonus</div>
+      <div id="giftStage">
+        <canvas id="giftParticles"></canvas>
+        <div id="giftBox" class="tap" onclick="openGift()">
+          <svg width="86" height="86" viewBox="0 0 64 64">
+            <rect x="10" y="26" width="44" height="30" rx="4" fill="#F5B942" stroke="#B9822A" stroke-width="2"/>
+            <rect x="10" y="26" width="44" height="8" fill="#FF5C8A"/>
+            <rect id="giftLid" x="7" y="16" width="50" height="12" rx="4" fill="#FF5C8A" stroke="#C23A63" stroke-width="2"/>
+            <rect x="29" y="16" width="6" height="40" fill="#B9822A"/>
+          </svg>
+        </div>
+      </div>
+      <div id="giftResult"></div>
+      <button id="giftContinueBtn" class="tap" onclick="closeGiftOverlay()">Continue</button>
+    </div>
+  </div>
+
+  <div id="adPreload" style="position:fixed; top:0; left:0; width:1px; height:1px; overflow:hidden; opacity:0.01; pointer-events:none; z-index:-1;"></div>
 </div>
 
 <script>
@@ -245,12 +306,16 @@ function todayStr(){
 }
 
 function loadState(){
+  let raw = null;
+  try{ raw = localStorage.getItem(STORAGE_KEY); }catch(e){}
+  const isBrandNew = !raw;
   const base = {
-    coins:0, tickets:5, ton:0, rotation:0, spinCount:0,
-    dailyDate: todayStr(), adsWatchedToday:0, tasksDoneToday:{}
+    coins:0, tickets:0, ton:0, rotation:0, spinCount:0,
+    dailyDate: todayStr(), adsWatchedToday:0, tasksDoneToday:{},
+    giftClaimed: !isBrandNew /* returning users with older saves never see the welcome gift */
   };
   let saved = null;
-  try{ saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); }catch(e){}
+  try{ saved = raw ? JSON.parse(raw) : null; }catch(e){}
   if(!saved) return base;
   const merged = Object.assign({}, base, saved);
   if(merged.dailyDate !== todayStr()){
@@ -266,7 +331,7 @@ function persistState(){
     coins: state.coins, tickets: state.tickets, ton: state.ton,
     rotation: state.rotation, spinCount: state.spinCount,
     dailyDate: state.dailyDate, adsWatchedToday: state.adsWatchedToday,
-    tasksDoneToday: state.tasksDoneToday
+    tasksDoneToday: state.tasksDoneToday, giftClaimed: state.giftClaimed
   };
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave)); }catch(e){}
 }
@@ -276,6 +341,81 @@ const C = {
   gold:'#F5B942', goldDark:'#B9822A', pink:'#FF5C8A', gray:'#3A4066',
   grayLight:'#9AA1C9', blue:'#34B3F1', card:'#1B2044', bg:'#11152B'
 };
+
+/* ---------- sound effects (synthesized, no external files) ---------- */
+let audioCtx = null;
+function getAudioCtx(){
+  if(!audioCtx){
+    try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){}
+  }
+  if(audioCtx && audioCtx.state === 'suspended'){ audioCtx.resume().catch(()=>{}); }
+  return audioCtx;
+}
+function playTone(freq, duration, type, vol, delay){
+  const ctx = getAudioCtx();
+  if(!ctx) return;
+  const t0 = ctx.currentTime + (delay || 0);
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type || 'sine';
+  osc.frequency.setValueAtTime(freq, t0);
+  gain.gain.setValueAtTime(0, t0);
+  gain.gain.linearRampToValueAtTime(vol || 0.2, t0 + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, t0 + duration);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t0);
+  osc.stop(t0 + duration + 0.03);
+}
+function playClickSound(){ playTone(680, 0.06, 'square', 0.10); }
+function playClaimSound(){
+  playTone(660, 0.12, 'triangle', 0.16, 0);
+  playTone(880, 0.14, 'triangle', 0.16, 0.08);
+  playTone(1180, 0.18, 'triangle', 0.18, 0.16);
+}
+
+/* ---------- lightweight particle burst (used by the welcome gift) ---------- */
+function burstParticles(canvas, count){
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = w; canvas.height = h;
+  const cx = w / 2, cy = h / 2;
+  const colors = [C.gold, C.goldDark, C.pink, '#FFD24C'];
+  const particles = [];
+  for(let i = 0; i < count; i++){
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 2.5 + Math.random() * 5.5;
+    particles.push({
+      x: cx, y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 2.5,
+      life: 1,
+      decay: 0.014 + Math.random() * 0.012,
+      size: 2.5 + Math.random() * 3.5,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
+  function tick(){
+    ctx.clearRect(0, 0, w, h);
+    let alive = false;
+    particles.forEach(p => {
+      if(p.life <= 0) return;
+      alive = true;
+      p.vy += 0.16;
+      p.x += p.vx; p.y += p.vy;
+      p.life -= p.decay;
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if(alive) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, w, h);
+  }
+  tick();
+}
 
 /* ---------- icon builders ---------- */
 function coinIcon(size=26, fill=C.gold, ring=C.goldDark){
@@ -353,6 +493,54 @@ const EXTRA_TASKS = [
 /* not persisted — tracks which link tasks were opened this session, before claiming */
 let openedTasks = {};
 
+/* ---------- background ad preload (drives the "Tasks" nav dot) ---------- */
+/* AdsGram's <adsgram-task> only fires reward / onError / onBannerNotFound /
+   onTooLongSession — there is no official "ad finished loading" event.
+   We approximate "loaded and ready to watch" by preloading a hidden probe
+   instance for each block and treating "no error after ~2.5s" as ready. */
+let adReadyState = {};   // blockId -> true/false
+let dotVisible = false;
+let prevAnyAdReady = false;
+
+function updateNavDot(){
+  const anyReady = Object.values(adReadyState).some(Boolean);
+  if(anyReady && !prevAnyAdReady && state.tab !== 'task') dotVisible = true;
+  if(!anyReady) dotVisible = false;
+  prevAnyAdReady = anyReady;
+  renderNav();
+}
+
+function schedulePreload(t, delay){
+  setTimeout(()=>{
+    const container = document.getElementById('adPreload');
+    if(!container) return;
+    const old = container.querySelector(`[data-block-id="${t.blockId}"]`);
+    if(old) old.remove();
+
+    const el = document.createElement('adsgram-task');
+    el.setAttribute('data-block-id', t.blockId);
+    el.setAttribute('data-debug', 'false');
+    el.setAttribute('data-debug-console', 'false');
+    el.innerHTML = `<span slot="reward"></span><div slot="button"></div><div slot="claim"></div><div slot="done"></div>`;
+
+    let settled = false;
+    el.addEventListener('onError', ()=>{ settled = true; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000); });
+    el.addEventListener('onBannerNotFound', ()=>{ settled = true; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000); });
+    el.addEventListener('onTooLongSession', ()=>{ settled = true; });
+    el.addEventListener('reward', ()=>{ adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 3000); });
+
+    container.appendChild(el);
+
+    setTimeout(()=>{
+      if(!settled){ adReadyState[t.blockId] = true; updateNavDot(); }
+    }, 2500);
+  }, delay);
+}
+
+function initAdPreload(){
+  AD_TASKS.forEach(t => schedulePreload(t, 0));
+}
+
 /* ---------- state ---------- */
 let state = Object.assign({ tab:'home', spinning:false }, loadState());
 
@@ -378,13 +566,15 @@ function renderNav(){
   document.getElementById('navHome').className = 'nav-btn' + (state.tab==='home' ? ' active' : '');
   document.getElementById('navHome').innerHTML = navIcon('home', state.tab==='home') + '<span>Home</span>';
   document.getElementById('navTask').className = 'nav-btn' + (state.tab==='task' ? ' active' : '');
-  document.getElementById('navTask').innerHTML = navIcon('task', state.tab==='task') + '<span>Tasks</span>';
+  document.getElementById('navTask').innerHTML = navIcon('task', state.tab==='task') + '<span>Tasks</span>' + (dotVisible ? '<span class="nav-dot"></span>' : '');
   document.getElementById('navShop').className = 'nav-btn' + (state.tab==='shop' ? ' active' : '');
   document.getElementById('navShop').innerHTML = navIcon('shop', state.tab==='shop') + '<span>Shop</span>';
 }
 
 function setTab(tab){
+  playClickSound();
   state.tab = tab;
+  if(tab === 'task'){ dotVisible = false; }
   renderNav();
   renderMain();
 }
@@ -414,6 +604,39 @@ function closeModal(){
   document.getElementById('modalOverlay').style.display = 'none';
 }
 
+/* ---------- welcome gift (first-time users only) ---------- */
+let giftOpening = false;
+function showGiftOverlay(){
+  document.getElementById('giftOverlay').style.display = 'flex';
+}
+function closeGiftOverlay(){
+  playClickSound();
+  document.getElementById('giftOverlay').style.display = 'none';
+}
+function openGift(){
+  if(giftOpening || state.giftClaimed) return;
+  giftOpening = true;
+  playClickSound();
+
+  const box = document.getElementById('giftBox');
+  const canvas = document.getElementById('giftParticles');
+  if(box) box.classList.add('opened');
+  burstParticles(canvas, 46);
+
+  setTimeout(()=>{
+    const reward = 15 + Math.floor(Math.random() * 11); // 15–25 coins
+    state.coins += reward;
+    state.giftClaimed = true;
+    persistState();
+    renderChips();
+    playClaimSound();
+
+    document.getElementById('giftSub').textContent = 'Enjoy your free coins';
+    document.getElementById('giftResult').textContent = `+${reward} coins!`;
+    document.getElementById('giftContinueBtn').style.display = 'block';
+  }, 450);
+}
+
 /* ---------- main screen render ---------- */
 function renderMain(){
   const main = document.getElementById('main');
@@ -433,7 +656,13 @@ function homeHTML(){
       <div class="seg-icon" style="transform:translateX(-50%) rotate(${-angle}deg)">${segIcon(seg.type)}</div>
     </div>`;
   });
-  const hint = state.tickets < 5 ? `${5-state.tickets} more ticket${5-state.tickets===1?'':'s'} needed` : 'Ready to spin';
+  const adMode = state.tickets === 4;
+  const hubLabel = adMode ? '4 Tickets<br>+1 Ad' : 'SPIN';
+  const hubAction = adMode ? 'handleSpinWithAd()' : 'handleSpin()';
+  const hint = adMode
+    ? 'Watch an ad to spin with 4 tickets'
+    : (state.tickets < 5 ? `${5-state.tickets} more ticket${5-state.tickets===1?'':'s'} needed` : 'Ready to spin');
+  const hintColor = adMode ? C.blue : (state.tickets<5 ? C.pink : '#9098C2');
   return `
     <div class="home-wrap">
       <div class="home-head">
@@ -444,10 +673,10 @@ function homeHTML(){
         <div id="pointer"></div>
         <div id="wheel">
           ${segs}
-          <button id="hub" class="tap" onclick="handleSpin()">SPIN</button>
+          <button id="hub" class="tap${adMode ? ' hub-ad' : ''}" onclick="${hubAction}">${hubLabel}</button>
         </div>
       </div>
-      <div id="spinHint" style="color:${state.tickets<5 ? C.pink : '#9098C2'}">${hint}</div>
+      <div id="spinHint" style="color:${hintColor}">${hint}</div>
       <div class="legend">
         <div class="legend-item">${coinIcon(18)}<span>Coin</span></div>
         <div class="legend-item">${ticketIcon(20, C.pink, C.bg)}<span>Ticket</span></div>
@@ -542,13 +771,52 @@ function initWheel(){
   if(wheel) wheel.style.transform = `rotate(${state.rotation}deg)`;
 }
 
+/* rewarded video ad (block 45480) that lets a user with 4 tickets spin anyway */
+let SpinAdController = null;
+function getSpinAdController(){
+  if(!SpinAdController && window.Adsgram){
+    SpinAdController = window.Adsgram.init({ blockId: "45480" });
+  }
+  return SpinAdController;
+}
+
 function handleSpin(){
   if(state.spinning) return;
   if(state.tickets < 5){
     showToast('You need 5 tickets to spin the wheel');
     return;
   }
+  playClickSound();
   state.tickets -= 5;
+  performSpin();
+}
+
+function handleSpinWithAd(){
+  if(state.spinning) return;
+  if(state.tickets !== 4){
+    handleSpin();
+    return;
+  }
+  const controller = getSpinAdController();
+  if(!controller){
+    showToast('Ad module is not ready, try again in a moment');
+    return;
+  }
+  playClickSound();
+  const hub = document.getElementById('hub');
+  if(hub) hub.disabled = true;
+
+  controller.show().then(()=>{
+    if(hub) hub.disabled = false;
+    state.tickets -= 4;
+    performSpin();
+  }).catch(()=>{
+    if(hub) hub.disabled = false;
+    showToast('Ad was not completed, spin canceled');
+  });
+}
+
+function performSpin(){
   state.spinCount += 1;
   persistState();
   renderChips();
@@ -588,6 +856,7 @@ function handleSpin(){
     if(type === 'coin') state.coins += amount;
     if(type === 'ticket') state.tickets += amount;
     renderChips();
+    if(type !== 'blank') playClaimSound();
     if(state.tab === 'home') renderMain();
     openModal(type, amount);
   }, 4300);
@@ -605,6 +874,7 @@ function attachAdTaskListeners(){
       state.adsWatchedToday += 1;
       renderChips();
       renderAdsBanner();
+      playClaimSound();
       showToast(`+${reward} ticket earned 🎫`);
     });
     el.addEventListener('onBannerNotFound', ()=>{
@@ -623,6 +893,7 @@ function attachAdTaskListeners(){
 function openExtraTask(id){
   const t = EXTRA_TASKS.find(x => x.id === id);
   if(!t || state.tasksDoneToday[t.id]) return;
+  playClickSound();
   if(t.url.indexOf('https://t.me/') === 0){
     if(TG && TG.openTelegramLink) TG.openTelegramLink(t.url); else window.open(t.url, '_blank');
   } else {
@@ -638,6 +909,7 @@ function claimExtraTask(id){
   state.tasksDoneToday[t.id] = true;
   state.tickets += t.reward;
   renderChips();
+  playClaimSound();
   showToast(`+${t.reward} ticket earned 🎫`);
   if(state.tab === 'task') renderMain();
 }
@@ -645,17 +917,21 @@ function claimExtraTask(id){
 /* ---------- shop behavior ---------- */
 function withdrawOnce(){
   if(state.coins < 500){ showToast('You need at least 500 coins'); return; }
+  playClickSound();
   state.coins -= 500;
   state.ton += 1;
   renderChips();
+  playClaimSound();
   showToast('1 TON Coin added to your wallet 💠');
   if(state.tab === 'shop') renderMain();
 }
 function buyTenPack(){
   if(state.coins < 4300){ showToast('Not enough coins'); return; }
+  playClickSound();
   state.coins -= 4300;
   state.ton += 10;
   renderChips();
+  playClaimSound();
   showToast('You got 10 TON Coin 💠');
   if(state.tab === 'shop') renderMain();
 }
@@ -665,6 +941,8 @@ renderChips();
 renderAdsBanner();
 renderNav();
 renderMain();
+initAdPreload();
+if(!state.giftClaimed) showGiftOverlay();
 </script>
 </body>
 </html>
