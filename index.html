@@ -80,7 +80,28 @@
   #toast{
     position:absolute; top:70px; left:50%; animation:floatToast .2s ease-out;
     background:var(--card2); border:1px solid var(--border); padding:8px 16px;
-    border-radius:999px; font-size:13px; white-space:nowrap; z-index:30; display:none;
+    border-radius:999px; font-size:13px; white-space:nowrap; z-index:60; display:none;
+  }
+
+  /* onboarding tutorial spotlight */
+  .tut-mask-panel{
+    position:absolute; background:rgba(9,11,25,0.6);
+    backdrop-filter:blur(4px) grayscale(1); -webkit-backdrop-filter:blur(4px) grayscale(1);
+    z-index:55; pointer-events:auto;
+  }
+  .tut-highlight-ring{
+    position:absolute; z-index:56; border:2px solid var(--gold); border-radius:14px;
+    pointer-events:none; animation:tutPulse 1.4s ease-in-out infinite;
+  }
+  @keyframes tutPulse{
+    0%,100%{ box-shadow:0 0 0 4px rgba(245,185,66,0.25), 0 0 14px rgba(245,185,66,0.5); }
+    50%{ box-shadow:0 0 0 8px rgba(245,185,66,0.12), 0 0 26px rgba(245,185,66,0.85); }
+  }
+  .tut-bubble{
+    position:absolute; z-index:57; background:var(--card2); border:1px solid var(--border);
+    border-radius:14px; padding:9px 14px; font-size:12.5px; font-weight:700; color:var(--text);
+    text-align:center; box-shadow:0 6px 20px rgba(0,0,0,0.45); pointer-events:none;
+    animation:popIn .25s ease-out;
   }
 
   /* modal */
@@ -283,6 +304,8 @@
   </div>
 
   <div id="adPreload" style="position:fixed; top:0; left:0; width:1px; height:1px; overflow:hidden; opacity:0.01; pointer-events:none; z-index:-1;"></div>
+
+  <div id="tutorialOverlay" style="position:absolute; inset:0; pointer-events:none;"></div>
 </div>
 
 <script>
@@ -643,6 +666,9 @@ function setTab(tab){
   if(tab === 'task'){ dotVisible = false; }
   renderNav();
   renderMain();
+  if(tutorialStep === 1 && tab === 'task'){
+    startTutorialStepTasks();
+  }
 }
 
 function showToast(msg){
@@ -678,6 +704,7 @@ function showGiftOverlay(){
 function closeGiftOverlay(){
   playClickSound();
   document.getElementById('giftOverlay').style.display = 'none';
+  maybeStartTutorial();
 }
 function openGift(){
   if(giftOpening || state.giftClaimed) return;
@@ -937,6 +964,7 @@ function attachAdTaskListeners(){
     const reward = parseInt(el.dataset.reward || '1', 10);
 
     el.addEventListener('reward', ()=>{
+      if(tutorialStep === 2) finishTutorial();
       state.tickets += reward;
       state.adsWatchedToday += 1;
       renderChips();
@@ -1006,13 +1034,108 @@ function buyTenPack(){
   if(state.tab === 'shop') renderMain();
 }
 
+/* ---------- onboarding tutorial (shown every launch while tickets < 4) ---------- */
+let tutorialStep = 0;              // 0 = none, 1 = pointing at Tasks tab, 2 = pointing at the ad-task cards
+let tutorialResizeHandler = null;
+
+function maybeStartTutorial(){
+  if(state.tickets < 4 && state.tab === 'home' && tutorialStep === 0){
+    startTutorialStepNav();
+  }
+}
+
+function clearTutorialOverlay(){
+  const el = document.getElementById('tutorialOverlay');
+  if(el) el.innerHTML = '';
+  if(tutorialResizeHandler){ window.removeEventListener('resize', tutorialResizeHandler); tutorialResizeHandler = null; }
+}
+
+function paintSpotlight(rect, bubbleHtml, bubbleAbove){
+  const overlay = document.getElementById('tutorialOverlay');
+  if(!overlay) return;
+  const appEl = document.getElementById('app');
+  const appRect = appEl.getBoundingClientRect();
+  const pad = 8;
+  const hole = {
+    left: Math.max(rect.left - appRect.left - pad, 0),
+    top: Math.max(rect.top - appRect.top - pad, 0),
+    right: Math.min(rect.right - appRect.left + pad, appRect.width),
+    bottom: Math.min(rect.bottom - appRect.top + pad, appRect.height)
+  };
+  const appW = appRect.width, appH = appRect.height;
+
+  overlay.innerHTML = `
+    <div class="tut-mask-panel" style="left:0px; top:0px; width:${appW}px; height:${hole.top}px;"></div>
+    <div class="tut-mask-panel" style="left:0px; top:${hole.bottom}px; width:${appW}px; height:${Math.max(appH-hole.bottom,0)}px;"></div>
+    <div class="tut-mask-panel" style="left:0px; top:${hole.top}px; width:${hole.left}px; height:${hole.bottom-hole.top}px;"></div>
+    <div class="tut-mask-panel" style="left:${hole.right}px; top:${hole.top}px; width:${Math.max(appW-hole.right,0)}px; height:${hole.bottom-hole.top}px;"></div>
+    <div class="tut-highlight-ring" style="left:${hole.left}px; top:${hole.top}px; width:${hole.right-hole.left}px; height:${hole.bottom-hole.top}px;"></div>
+  `;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'tut-bubble';
+  bubble.style.maxWidth = Math.min(appW-32, 260)+'px';
+  bubble.innerHTML = bubbleHtml;
+  overlay.appendChild(bubble);
+
+  requestAnimationFrame(()=>{
+    const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
+    let bLeft = hole.left + (hole.right-hole.left)/2 - bw/2;
+    bLeft = Math.max(10, Math.min(bLeft, appW-bw-10));
+    let bTop = bubbleAbove ? (hole.top - bh - 14) : (hole.bottom + 14);
+    if(bTop < 10) bTop = hole.bottom + 14;
+    if(bTop + bh > appH-10) bTop = Math.max(10, hole.top - bh - 14);
+    bubble.style.left = bLeft+'px';
+    bubble.style.top = bTop+'px';
+  });
+}
+
+function startTutorialStepNav(){
+  tutorialStep = 1;
+  const target = document.getElementById('navTask');
+  if(!target) return;
+  const paint = ()=> paintSpotlight(target.getBoundingClientRect(), '👆 برای دیدن تسک‌ها اینجا بزن', true);
+  paint();
+  tutorialResizeHandler = ()=>{ if(tutorialStep === 1) paint(); };
+  window.addEventListener('resize', tutorialResizeHandler);
+}
+
+function startTutorialStepTasks(){
+  tutorialStep = 2;
+  const mainEl = document.getElementById('main');
+  if(mainEl) mainEl.scrollTop = 0;
+  setTimeout(()=>{
+    if(tutorialStep !== 2) return;
+    const tasks = document.querySelectorAll('.ad-task');
+    if(!tasks.length){ finishTutorial(); return; }
+    const paint = ()=>{
+      const first = tasks[0].getBoundingClientRect();
+      const last = tasks[tasks.length-1].getBoundingClientRect();
+      const rect = {
+        left: Math.min(first.left, last.left), right: Math.max(first.right, last.right),
+        top: Math.min(first.top, last.top), bottom: Math.max(first.bottom, last.bottom)
+      };
+      paintSpotlight(rect, '👆 روی یکی از این تبلیغ‌ها بزن تا بلیط بگیری', false);
+    };
+    paint();
+    tutorialResizeHandler = ()=>{ if(tutorialStep === 2) paint(); };
+    window.addEventListener('resize', tutorialResizeHandler);
+  }, 260);
+}
+
+function finishTutorial(){
+  if(tutorialStep === 0) return;
+  tutorialStep = 0;
+  clearTutorialOverlay();
+}
+
 /* ---------- init ---------- */
 renderChips();
 renderAdsBanner();
 renderNav();
 renderMain();
 initAdPreload();
-if(!state.giftClaimed) showGiftOverlay();
+if(!state.giftClaimed) showGiftOverlay(); else maybeStartTutorial();
 syncUserFromBackend(); /* refreshes state.coins from Supabase once it responds; local value renders first so there's no blank flash */
 </script>
 </body>
