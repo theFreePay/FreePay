@@ -572,6 +572,11 @@ const AD_TASKS = [
   { blockId: 'task-20434', reward: 1 },
 ];
 
+/* AdsGram does not support running 2+ <adsgram-task> blocks at the same time.
+   Only one block is ever "live" (mounted as a real adsgram-task and preloaded);
+   the other renders as a locked placeholder until the live one settles. */
+let activeAdIndex = 0;
+
 /* ---------- once-a-day link tasks ---------- */
 const EXTRA_TASKS = [
   { id:3, title:"Play AminAz", desc:"Open the mini game and give it a try", url:"https://who-tma.github.io/AminAz/", reward:1 },
@@ -590,6 +595,7 @@ let openedTasks = {};
 let adReadyState = {};   // blockId -> true/false
 let dotVisible = false;
 let prevAnyAdReady = false;
+let adPreloadGeneration = 0; // bumped every time the active block changes, so old timers/listeners for the previous block become no-ops
 
 function updateNavDot(){
   const anyReady = Object.values(adReadyState).some(Boolean);
@@ -599,8 +605,9 @@ function updateNavDot(){
   renderNav();
 }
 
-function schedulePreload(t, delay){
+function schedulePreload(t, delay, gen){
   setTimeout(()=>{
+    if(gen !== adPreloadGeneration) return; // this block is no longer the active one — stop the chain
     const container = document.getElementById('adPreload');
     if(!container) return;
     const old = container.querySelector(`[data-block-id="${t.blockId}"]`);
@@ -613,21 +620,41 @@ function schedulePreload(t, delay){
     el.innerHTML = `<span slot="reward"></span><div slot="button"></div><div slot="claim"></div><div slot="done"></div>`;
 
     let settled = false;
-    el.addEventListener('onError', ()=>{ settled = true; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000); });
-    el.addEventListener('onBannerNotFound', ()=>{ settled = true; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000); });
+    el.addEventListener('onError', ()=>{ settled = true; if(gen !== adPreloadGeneration) return; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000, gen); });
+    el.addEventListener('onBannerNotFound', ()=>{ settled = true; if(gen !== adPreloadGeneration) return; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 30000, gen); });
     el.addEventListener('onTooLongSession', ()=>{ settled = true; });
-    el.addEventListener('reward', ()=>{ adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 3000); });
+    el.addEventListener('reward', ()=>{ if(gen !== adPreloadGeneration) return; adReadyState[t.blockId] = false; updateNavDot(); schedulePreload(t, 3000, gen); });
 
     container.appendChild(el);
 
     setTimeout(()=>{
+      if(gen !== adPreloadGeneration) return;
       if(!settled){ adReadyState[t.blockId] = true; updateNavDot(); }
     }, 2500);
   }, delay);
 }
 
+/* Only ever preloads the single currently-active block — never both at once. */
+function startPreloadForActiveBlock(){
+  adPreloadGeneration++;
+  const gen = adPreloadGeneration;
+  const container = document.getElementById('adPreload');
+  if(container) container.innerHTML = '';
+  adReadyState = {};
+  updateNavDot();
+  schedulePreload(AD_TASKS[activeAdIndex], 0, gen);
+}
+
 function initAdPreload(){
-  AD_TASKS.forEach(t => schedulePreload(t, 0));
+  startPreloadForActiveBlock();
+}
+
+/* Called when the live task-list block settles (reward / error / no-fill) so the
+   other block becomes live next time the user opens the Tasks tab. */
+function rotateActiveAdBlock(){
+  activeAdIndex = (activeAdIndex + 1) % AD_TASKS.length;
+  startPreloadForActiveBlock();
+  if(state.tab === 'task') renderMain();
 }
 
 /* ---------- state ---------- */
@@ -780,7 +807,19 @@ function homeHTML(){
   `;
 }
 
-function adTaskCard(t){
+function adTaskCard(t, isActive){
+  if(!isActive){
+    /* Locked placeholder — plain markup, NOT an <adsgram-task> element, so it never
+       requests an ad. This is what keeps us from ever running 2 blocks at once. */
+    return `
+      <div class="ad-task ad-task--locked" style="opacity:.45; display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <div>
+          <div style="font-size:13.5px; font-weight:600;">Sponsored Ad</div>
+          <span class="ad-task__reward">+${t.reward} ticket</span>
+        </div>
+        <div class="ad-task__btn ad-task__btn--done">Locked</div>
+      </div>`;
+  }
   return `
     <adsgram-task
       data-block-id='${t.blockId}'
@@ -814,7 +853,7 @@ function extraTaskCard(t){
 }
 
 function taskHTML(){
-  let adCards = AD_TASKS.map(adTaskCard).join('');
+  let adCards = AD_TASKS.map((t, i) => adTaskCard(t, i === activeAdIndex)).join('');
   let dailyCards = EXTRA_TASKS
     .filter(t => !t.minTickets || state.tickets > 7)
     .map(extraTaskCard).join('');
@@ -958,7 +997,7 @@ function performSpin(){
 
 /* ---------- AdsGram ad-task behavior ---------- */
 function attachAdTaskListeners(){
-  document.querySelectorAll('.ad-task').forEach(el=>{
+  document.querySelectorAll('adsgram-task.ad-task').forEach(el=>{
     if(el.dataset.bound) return;
     el.dataset.bound = '1';
     const reward = parseInt(el.dataset.reward || '1', 10);
@@ -972,15 +1011,19 @@ function attachAdTaskListeners(){
       playClaimSound();
       showToast(`+${reward} ticket earned 🎫`);
       bumpAdsWatchedBackend();
+      rotateActiveAdBlock();
     });
     el.addEventListener('onBannerNotFound', ()=>{
       showToast('No ad available right now, try again later');
+      rotateActiveAdBlock();
     });
     el.addEventListener('onError', ()=>{
       showToast('Could not load the ad, try again later');
+      rotateActiveAdBlock();
     });
     el.addEventListener('onTooLongSession', ()=>{
       showToast('Session expired, please reopen the app');
+      rotateActiveAdBlock();
     });
   });
 }
