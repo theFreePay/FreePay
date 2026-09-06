@@ -213,6 +213,32 @@
   .ad-task__btn--claim{ background:var(--gold); color:#241A05; }
   .ad-task__btn--done{ background:transparent; border:1px solid var(--border); color:var(--textDim); }
 
+  /* ad cooldown (neon countdown between ads) */
+  .ad-cooldown{
+    background:var(--card); border:1px solid var(--border); border-inline-start:3px solid #39FF88;
+    border-radius:14px; padding:14px;
+  }
+  .ad-cooldown__top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .ad-cooldown__title{ font-size:13.5px; font-weight:600; }
+  .ad-cooldown__sub{ font-size:11.5px; color:var(--textMuted); margin-top:2px; }
+  .ad-cooldown__timer{
+    font-size:14px; font-weight:800; font-variant-numeric:tabular-nums; color:#39FF88;
+    text-shadow:0 0 8px rgba(57,255,136,0.8);
+  }
+  .ad-cooldown__track{
+    height:9px; border-radius:999px; background:rgba(255,255,255,0.08);
+    overflow:hidden; position:relative;
+  }
+  .ad-cooldown__bar{
+    height:100%; border-radius:999px; width:100%;
+    background:linear-gradient(90deg,#39FF88,#34E0F1,#39FF88);
+    background-size:200% 100%;
+    box-shadow:0 0 10px 2px rgba(57,255,136,0.7), 0 0 18px 4px rgba(52,224,241,0.45);
+    transition:width .25s linear;
+    animation:neonShift 1.6s linear infinite;
+  }
+  @keyframes neonShift{ 0%{ background-position:0% 0; } 100%{ background-position:200% 0; } }
+
   /* daily link tasks */
   .task-card{
     display:flex; align-items:center; gap:12px; background:var(--card);
@@ -634,6 +660,63 @@ function schedulePreload(t, delay, gen){
   }, delay);
 }
 
+/* ---------- forced pause between block ads (anti-abuse + lets AdsGram register the click) ---------- */
+const AD_COOLDOWN_MS = 15000;
+let adCoolingDown = false;
+let adCooldownStart = 0;
+let adCooldownInterval = null;
+let adCooldownTimeout = null;
+
+function adCooldownCard(){
+  return `
+    <div class="ad-cooldown">
+      <div class="ad-cooldown__top">
+        <div>
+          <div class="ad-cooldown__title">Next ad ready in</div>
+          <div class="ad-cooldown__sub">Take a breath, your ticket is already saved 🎫</div>
+        </div>
+        <div class="ad-cooldown__timer" id="adCooldownNum">${Math.ceil(AD_COOLDOWN_MS/1000)}</div>
+      </div>
+      <div class="ad-cooldown__track">
+        <div class="ad-cooldown__bar" id="adCooldownBar"></div>
+      </div>
+    </div>`;
+}
+
+function updateAdCooldownUI(){
+  const bar = document.getElementById('adCooldownBar');
+  const num = document.getElementById('adCooldownNum');
+  if(!bar || !num) return;
+  const remain = Math.max(0, AD_COOLDOWN_MS - (Date.now() - adCooldownStart));
+  bar.style.width = Math.max(0, (remain / AD_COOLDOWN_MS) * 100) + '%';
+  num.textContent = Math.ceil(remain / 1000);
+}
+
+function startAdCooldown(){
+  adCoolingDown = true;
+  adCooldownStart = Date.now();
+  if(adCooldownInterval) clearInterval(adCooldownInterval);
+  if(adCooldownTimeout) clearTimeout(adCooldownTimeout);
+
+  if(state.tab === 'task') renderMain();
+  /* set the bar's initial width on the *next* frame so the CSS transition
+     actually animates from 100% down, instead of snapping straight to 0 */
+  requestAnimationFrame(()=>{
+    const bar = document.getElementById('adCooldownBar');
+    if(bar) bar.style.width = '100%';
+    requestAnimationFrame(updateAdCooldownUI);
+  });
+
+  adCooldownInterval = setInterval(updateAdCooldownUI, 250);
+  adCooldownTimeout = setTimeout(()=>{
+    adCoolingDown = false;
+    clearInterval(adCooldownInterval);
+    adCooldownInterval = null;
+    adCooldownTimeout = null;
+    rotateActiveAdBlock();
+  }, AD_COOLDOWN_MS);
+}
+
 /* Only ever preloads the single currently-active block — never both at once. */
 function startPreloadForActiveBlock(){
   adPreloadGeneration++;
@@ -766,7 +849,10 @@ function renderMain(){
   else main.innerHTML = shopHTML();
 
   if(state.tab === 'home') initWheel();
-  if(state.tab === 'task') attachAdTaskListeners();
+  if(state.tab === 'task'){
+    attachAdTaskListeners();
+    if(adCoolingDown) updateAdCooldownUI();
+  }
 }
 
 function homeHTML(){
@@ -853,7 +939,9 @@ function extraTaskCard(t){
 }
 
 function taskHTML(){
-  let adCards = AD_TASKS.map((t, i) => adTaskCard(t, i === activeAdIndex)).join('');
+  let adCards = adCoolingDown
+    ? adCooldownCard()
+    : AD_TASKS.map((t, i) => adTaskCard(t, i === activeAdIndex)).join('');
   let dailyCards = EXTRA_TASKS
     .filter(t => !t.minTickets || state.tickets > 7)
     .map(extraTaskCard).join('');
@@ -1011,7 +1099,7 @@ function attachAdTaskListeners(){
       playClaimSound();
       showToast(`+${reward} ticket earned 🎫`);
       bumpAdsWatchedBackend();
-      rotateActiveAdBlock();
+      startAdCooldown();
     });
     el.addEventListener('onBannerNotFound', ()=>{
       showToast('No ad available right now, try again later');
